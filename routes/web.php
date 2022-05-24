@@ -18,14 +18,16 @@ Route::get('/',[frontendController::class,'index']);
 Route::get('/showCategories',[frontendController::class,'showCategories']);
 Route::get('/productsOfCateg/{slug}',[frontendController::class,'productsOfCateg']);
 Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'productDetails']);
+
+
+
 Route::post('/add-to-cart',[CartController::class,'addProduct']);
 
+Route::middleware(['auth'])->group(function(){
 
 
-// Route::middleware(['auth'])->group(function(){
 
-
-// });
+});
 
 Auth::routes();
 
