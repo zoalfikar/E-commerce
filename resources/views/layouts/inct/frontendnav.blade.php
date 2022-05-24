@@ -2,16 +2,16 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav" >
         <li class="nav-item ">
-          <a class="nav-link " href="{{url('/')}}">Home </a>
+          <a  class="nav-link  " href="{{url('/')}}">Home </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+        <li class="nav-item ">
+          <a class="nav-link"  href="{{url('/orders')}}">my orders</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{url('/showCategories')}}">categories</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+        <li class="nav-item ">
+          <a class="nav-link " href="{{url('/cart')}}">cart</a>
         </li>
        </ul>
        <ul class="navbar-nav ms-auto" >
@@ -40,8 +40,6 @@
         </li>
 
         @endguest
-
-
 
       </ul>
     </div>

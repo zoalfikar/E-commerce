@@ -3,6 +3,8 @@ use App\Http\Controllers\frontend\frontendController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Controllers\Frontend\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +15,7 @@ use App\Http\Controllers\Frontend\CartController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//routes for products and categories
 Route::get('/',[frontendController::class,'index']);
 Route::get('/showCategories',[frontendController::class,'showCategories']);
 Route::get('/productsOfCateg/{slug}',[frontendController::class,'productsOfCateg']);
@@ -21,13 +23,25 @@ Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'
 
 
 
+
+//routes for cart
 Route::post('/add-to-cart',[CartController::class,'addProduct']);
+Route::post('/delet-from-cart',[CartController::class,'deletProduct']);
+Route::post('/update-cart',[CartController::class,'updateProduct']);
+Route::middleware(['auth'])->group(function()
 
-Route::middleware(['auth'])->group(function(){
-
-
-
+////////
+{
+    Route::get('/cart', [CartController::class,'showCart']);
+    Route::get('/orders', [UserController::class,'index']);
+    Route::get('/order-details/{id}', [UserController::class,'orderDetails']);
 });
+
+
+////routes for checkout
+Route::get('/checkout', [CheckoutController::class,'index']);
+Route::post('/placeholder', [CheckoutController::class,'placeholder']);
+
 
 Auth::routes();
 

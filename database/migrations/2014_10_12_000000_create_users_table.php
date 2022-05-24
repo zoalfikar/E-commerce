@@ -22,6 +22,14 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('role_as')->default('0');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('last_name')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('address1')->nullable();
+            $table->string('address2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('pin_code')->nullable();
         });
     }
 

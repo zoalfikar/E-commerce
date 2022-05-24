@@ -11,13 +11,13 @@
 
     @include('layouts/inct/frontendslider')
 
-    <div class="container ">
+    <div style="background-color: bisque" class="container ">
         <a href="{{url('/showCategories')}}">collection</a>/
         <a href="{{url('/productsOfCateg/'.$product->category->slug)}}">{{$product->category->name}}</a>/
         <a href="{{url('/productDetails/'.$product->category->slug.'/'.$product->slug)}}">{{$product->name}}</a>
      </div>
 
-    <div class="container">
+    <div class="container mt-5">
         <div class="card product_data">
             <div class="card-body ">
                 <h3 class="card-title">{{$product->name}}</h3>
@@ -27,7 +27,7 @@
                 @endif
                 <div class="row">
                     <div class="col-lg-5 col-md-5 col-sm-6">
-                        <div class="white-box text-center"><img src="{{asset('assets/uploads/product/'.$product->img)}}" class="img-responsive" style="width:430px; height:600px"></div>
+                        <div class="white-box text-center"><img src="{{asset('assets/uploads/product/'.$product->img)}}" class="img-responsive" style="width:430px; height:430px"></div>
                     </div>
                     <div class="col-lg-7 col-md-7 col-sm-6">
                         <h4 class="box-title mt-5">description</h4>
@@ -37,9 +37,11 @@
                             <small class="text-success ">{{$product->selling_price}}</small>
                         </h2>
                         <input type="hidden" value="{{$product->id}}" class="prod_id">
-                        <button class=" addToCartBtn btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
-                            <i class="fa fa-shopping-cart"></i> add to cart
-                        </button>
+                        @if ($product->qty>0)
+                            <button class=" addToCartBtn btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
+                                <i class="fa fa-shopping-cart"></i> add to cart
+                            </button>
+                         @endif
                         <button class="btn btn-primary btn-rounded">Buy Now</button>
                         <div class="input-groub text-center mb-3" style="width: 130px">
                            <label>quantity</label>
@@ -117,26 +119,26 @@
 
                 $(".increment-btn").click(function()
                     {
-                        var inc_value=$('.qty-input').val();
+                        var inc_value=$(this).closest('.product_data').find('.qty-input').val();
                         var value=parseInt(inc_value,10);
                         value= isNaN(value) ? 0 : value ;
                         if (value<10)
                             {
                                 value++;
-                                $('.qty-input').val(value);
+                                $(this).closest('.product_data').find('.qty-input').val(value);
 
                             }
                     });
 
                     $(".decrement-btn").click(function()
                     {
-                        var dec_value=$('.qty-input').val();
+                        var dec_value=$(this).closest('.product_data').find('.qty-input').val();
                         var value=parseInt(dec_value,10);
                         value= isNaN(value) ? 0 : value ;
                         if (value>0)
                             {
                                 value--;
-                                $('.qty-input').val(value);
+                                $(this).closest('.product_data').find('.qty-input').val(value);
 
                             }
                     });

@@ -10,6 +10,11 @@ use App\Models\Cart;
 class CartController extends Controller
 {
 
+    public function showCart () {
+        $cartIteams=Cart::where('user_id',Auth::id())->get() ;
+        return view('frontend.cart',compact('cartIteams'));
+
+    }
 
     public function addProduct (Request $request )
     {
@@ -56,4 +61,74 @@ class CartController extends Controller
 
     }
 
+
+    public function updateProduct(Request $request) {
+
+        $prod_id=$request->input('prod_id');
+        $qty=$request->input('qty');
+
+        if (Auth::check())
+        {
+
+            if ($prod_check = Cart::where('prod_id', $prod_id)->where('user_id',Auth::id())->exists())
+            {
+                $cartIteam=Cart::where('prod_id', $prod_id)->where('user_id',Auth::id())->first();
+                $cartIteam->prod_qty=$qty;
+                $cartIteam->save();
+
+
+            }
+
+            else
+            {
+                return response()->json(['status'=>"product not found"]);
+            }
+
+        }
+
+        else
+
+        {
+            return response()->json(['status'=>"login to continue"]);
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+    public function deletProduct (Request $request )
+    {
+
+         $product_id = $request->input('prod_id');
+
+        if (Auth::check())
+        {
+
+            if ($prod_check = Cart::where('prod_id', $product_id)->where('user_id',Auth::id())->exists())
+            {
+                $cartIteam=Cart::where('prod_id', $product_id)->where('user_id',Auth::id())->first();
+                $cartIteam->delete();
+                return response()->json(['status'=>$cartIteam->Product->name."has deleted"]);
+            }
+
+            else
+            {
+                return response()->json(['status'=>"product not found"]);
+            }
+
+        }
+
+        else
+
+        {
+            return response()->json(['status'=>"login to continue"]);
+        }
+
+    }
 }

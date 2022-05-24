@@ -80,8 +80,8 @@
                 </script>
             @endif
 
-        <script src={{asset('frontend/js/bootstrap.bundle.min.js')}}></script>
         <script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
+        <script src={{asset('frontend/js/bootstrap.bundle.min.js')}}></script>
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
 
         @yield('scripts')

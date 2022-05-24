@@ -21,7 +21,7 @@
                         <div class="item">
                             <div class="card">
                                 <a href="{{url('/productDetails/'.$product->category->slug.'/'.$product->slug)}}">
-                                    <img src="{{asset('assets/uploads/product/'.$product->img)}}" alt="not found">
+                                    <img style="height: 320px; width:270px" src="{{asset('assets/uploads/product/'.$product->img)}}" alt="not found">
                                     <div class="card-body">
                                         <h4>{{$product->name}}</h4>
                                         <p class="float-start">{{$product->selling_price}}</p>
@@ -47,7 +47,7 @@
                         <div class="item">
                             <div class="card">
                                 <a href="{{url('/productsOfCateg/'.$category->slug)}}">
-                                    <img src="{{asset('assets/uploads/category/'.$category->img)}}" alt="not found">
+                                    <img  style="height: 320px; width:270px" src="{{asset('assets/uploads/category/'.$category->img)}}" alt="not found">
                                     <div class="card-body">
                                         <h4>{{$category->name}}</h4>
                                         <p class="float-start">{{$category->description}}</p>
@@ -84,6 +84,10 @@
                 }
             }
         })
+
+
+
+
     </script>
 
 @endsection

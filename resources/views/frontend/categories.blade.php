@@ -12,7 +12,7 @@
 
     @include('layouts/inct/frontendslider')
 
-    <div class="container ">
+    <div style="background-color: bisque" class="container ">
         <a href="{{url('/showCategories')}}">collection</a>
      </div>
 
@@ -24,7 +24,7 @@
                     <div class="col-md-3 mt-3">
                         <div class="card">
                             <a href="{{url('/productsOfCateg/'.$categoy->slug)}}">
-                                <img src="{{asset('assets/uploads/categoy/'.$categoy->img)}}" alt="not found">
+                                <img  style="height: 320px; width:270px" src="{{asset('assets/uploads/category/'.$categoy->img)}}" alt="not found">
                                 <div class="card-body">
                                     <h4>{{$categoy->name}}</h4>
                                     <p class="float-start">{{$categoy->description}}</p>
