@@ -90,6 +90,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <h4>Grand total :{{$orders->total_price}}$</h4>
                 </div>
             </div>
         </div>

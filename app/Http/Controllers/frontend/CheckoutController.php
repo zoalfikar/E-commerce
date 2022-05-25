@@ -43,11 +43,19 @@ class CheckoutController extends Controller
         $order->country=$request->input('country');
         $order->pincode=$request->input('pincod');
         $order->tracking_no='Ecomerce'.rand(1111,9999);
+        $cartitems_total = Cart::where('user_id', Auth::id())->get();
+        foreach ($cartitems_total as $item)
+        {
+            $total+=$item->prod_qty*(float)$item->Product->selling_price;
+        }
+
+        $order->total_price=$total;
+        $order->save();
+
         $cartitem = Cart::where('user_id', Auth::id())->get();
         foreach ($cartitem as $item)
         {
-        foreach ($cartitem as $item)
-            $total+=$item->prod_qty*$item->Product->selling_price;
+
             OrderItem::create(
                 [
                     'order_id'=>$order->id,
@@ -61,8 +69,7 @@ class CheckoutController extends Controller
             $prod->update();
         }
 
-        $order->total_price=$total;
-        $order->save();
+
 
         if (Auth::user()->address == null)
 

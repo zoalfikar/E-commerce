@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\UserController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 //routes for products and categories
 Route::get('/',[frontendController::class,'index']);
 Route::get('/showCategories',[frontendController::class,'showCategories']);
@@ -65,5 +66,11 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
     Route::get('/edit-product/{id}' ,  [App\Http\Controllers\admin\ProductController::class, 'editProduct']);
     Route::post('/edit-product/{id}' ,  [App\Http\Controllers\admin\ProductController::class, 'updateProduct']);
     Route::get('/delete-product/{id}' ,  [App\Http\Controllers\admin\ProductController::class, 'deleteProduct']);
-
+    ///////
+    Route::get('/order-list', [App\Http\Controllers\admin\FrontendController::class, 'orderList']);
+    Route::get('/d-order-details/{id}', [App\Http\Controllers\admin\FrontendController::class, 'orderDetail']);
+    Route::post('/update-order/{id}', [App\Http\Controllers\admin\FrontendController::class, 'updateOrder']);
+    /////users
+    Route::get('/users', [App\Http\Controllers\admin\FrontendController::class, 'users']);
+    Route::get('/user-detail/{id}', [App\Http\Controllers\admin\FrontendController::class, 'userDetails']);
 });
