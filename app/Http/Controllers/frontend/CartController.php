@@ -18,7 +18,6 @@ class CartController extends Controller
 
     public function addProduct (Request $request )
     {
-
          $product_id = $request->input('product_id');
          $product_qty = $request->input('product_qty');
 
@@ -39,7 +38,7 @@ class CartController extends Controller
                         $cartIteam->prod_qty = $product_qty;
                         $cartIteam->user_id=  Auth::id();
                         $cartIteam->save();
-                        return response()->json(['status'=>$prod_check->name."added to cart"]);
+                        return response()->json(['status'=>$prod_check->name." added to cart"]);
                     }
             }
 
@@ -75,8 +74,6 @@ class CartController extends Controller
                 $cartIteam=Cart::where('prod_id', $prod_id)->where('user_id',Auth::id())->first();
                 $cartIteam->prod_qty=$qty;
                 $cartIteam->save();
-
-
             }
 
             else
@@ -93,14 +90,7 @@ class CartController extends Controller
         }
 
 
-
-
-
-
     }
-
-
-
 
     public function deletProduct (Request $request )
     {
@@ -130,5 +120,11 @@ class CartController extends Controller
             return response()->json(['status'=>"login to continue"]);
         }
 
+    }
+
+    public function CartCount ()
+    {
+        $count=Cart::where('user_id',Auth::id())->count();
+        return response()->json(['status'=>$count]);
     }
 }

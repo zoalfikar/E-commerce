@@ -83,6 +83,67 @@
         <script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
         <script src={{asset('frontend/js/bootstrap.bundle.min.js')}}></script>
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
+        <script>
+            $(document).ready(function ()
+                {
+                    $.ajaxSetup({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                    });
+
+                    loadCart();
+                    loadWishlist();
+
+                        function loadCart()
+                        {
+                            $.ajax(
+                                {
+                                   method: "get",
+                                   url:"/get-cart-count",
+                                   success:function(response)
+                                   {
+                                        if (response.status>0)
+                                        {
+                                            $('.cat-items-count').html( response.status);
+                                        } else
+                                        {
+                                            $('.cat-items-count').html('');
+                                        }
+                                   }
+
+                                });
+                        }
+
+                        function loadWishlist()
+                        {
+                            $.ajax(
+                                {
+                                   method: "get",
+                                   url:"/get-wishlist-count",
+                                   success:function(response)
+                                   {
+                                       if (response.status>0)
+                                       {
+                                           $('.wishlist-items-count').html( response.status);
+                                       }
+
+                                       else
+
+                                       {
+                                        $('.wishlist-items-count').html('');
+                                       }
+
+                                   }
+
+                                });
+                        }
+
+                });
+
+
+        </script>
+
 
         @yield('scripts')
 

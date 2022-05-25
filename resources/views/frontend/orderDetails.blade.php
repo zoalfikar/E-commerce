@@ -24,43 +24,43 @@
                     <div class="card-body">
                         <div class="row checkout-form">
                             <div class="col-md-6">
-                                <label for="">first name:</label>
+                                <label style="" for="">first name:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->name}}
                             </div>
                             <div class="col-md-6">
-                                <label for="">last name: </label>
+                                <label for="">last name: </label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->last_name}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">email:</label>
+                                <label for="">email:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->email}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">phone number:</label>
+                                <label for="">phone number:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->phone_number}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">address 1:</label>
+                                <label for="">address 1:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->address1}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">address 2:</label>
+                                <label for="">address 2:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->address2}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">city:</label>
+                                <label for="">city:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->city}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">state:</label>
+                                <label for="">state:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->state}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">country:</label>
+                                <label for="">country:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->country}}
                             </div>
                             <div class="col-md-6 mt-3">
-                                <label for="">pin cod:</label>
+                                <label for="">pin cod:</label>&nbsp;&nbsp;&nbsp;
                                 {{Auth::user()->pin_code}}
                             </div>
                         </div>
@@ -90,7 +90,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <h4>Grand total :{{$orders->total_price}}$</h4>
+                    <div class="card-footer">
+                        <h4>Grand total :{{$orders->total_price}}$</h4>
+                    </div>
+
                 </div>
             </div>
         </div>

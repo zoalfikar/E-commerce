@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\wishlistController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,23 +26,34 @@ Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'
 
 
 
-//routes for cart
-Route::post('/add-to-cart',[CartController::class,'addProduct']);
-Route::post('/delet-from-cart',[CartController::class,'deletProduct']);
-Route::post('/update-cart',[CartController::class,'updateProduct']);
+
+
+
 Route::middleware(['auth'])->group(function()
+{       //routes for cart
 
-////////
-{
-    Route::get('/cart', [CartController::class,'showCart']);
-    Route::get('/orders', [UserController::class,'index']);
-    Route::get('/order-details/{id}', [UserController::class,'orderDetails']);
-});
+        Route::get('/cart', [CartController::class,'showCart']);
+        Route::post('/add-to-cart',[CartController::class,'addProduct']);
+        Route::post('/delet-from-cart',[CartController::class,'deletProduct']);
+        Route::post('/update-cart',[CartController::class,'updateProduct']);
+        Route::get('/get-cart-count', [CartController::class,'CartCount']);
+        ///////
+        Route::get('/orders', [UserController::class,'index']);
+        Route::get('/order-details/{id}', [UserController::class,'orderDetails']);
+        ////
+        Route::get('/wishlist', [wishlistController::class,'wishlist']);
+        Route::post('/add-to-wishlist', [wishlistController::class,'addTOwishlist']);
+        Route::post('/delet-from-wishlist',[wishlistController::class,'deletFromWishlis']);
+        Route::get('/get-wishlist-count', [wishlistController::class,'wishlistCount']);
+
+        ////routes for checkout
+        Route::get('/checkout', [CheckoutController::class,'index']);
+        Route::post('/placeholder', [CheckoutController::class,'placeholder']);
+        Route::post('/proceed-to-pay', [CheckoutController::class,'razorpay']);
+
+ });
 
 
-////routes for checkout
-Route::get('/checkout', [CheckoutController::class,'index']);
-Route::post('/placeholder', [CheckoutController::class,'placeholder']);
 
 
 Auth::routes();

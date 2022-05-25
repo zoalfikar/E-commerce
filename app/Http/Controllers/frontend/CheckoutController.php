@@ -42,6 +42,8 @@ class CheckoutController extends Controller
         $order->state=$request->input('state');
         $order->country=$request->input('country');
         $order->pincode=$request->input('pincod');
+        $order->payment_mode=$request->input('payment_mode');
+        $order->payment_id=$request->input('payment_id');
         $order->tracking_no='Ecomerce'.rand(1111,9999);
         $cartitems_total = Cart::where('user_id', Auth::id())->get();
         foreach ($cartitems_total as $item)
@@ -87,6 +89,46 @@ class CheckoutController extends Controller
         }
         $cart = Cart::where('user_id', Auth::id())->get();
         Cart::destroy($cart);
+        if ($request->input('payment_mode')=="pay by razorpay") {
+            return response()->json(['status'=>'order replaced successfully']);
+        }
         return redirect('/')->with('status','order replaced successfully');
+    }
+    public function razorpay(Request $request)
+    {
+        $cartitems=Cart::where('user_id',Auth::id())->get();
+        $total_price=0;
+        foreach ($cartitems as $cartitem)
+        {
+            $total_price+=(float)$cartitem->Product->selling_price*$cartitem->prod_qty;
+        }
+
+        $firstname = $request->input('firstname');
+        $lastname = $request->input('lastname');
+        $email = $request->input('email');
+        $phoneNumber = $request->input('phoneNumber');
+        $address1 = $request->input('address1');
+        $address2 = $request->input('address2');
+        $city = $request->input('city');
+        $state = $request->input('state');
+        $country = $request->input('country');
+        $pincod = $request->input('pincod');
+
+        return response()->json([
+            'firstname'=>$firstname,
+            'lastname'=>$lastname,
+            'email'=>$email,
+            'phoneNumber'=>$phoneNumber,
+            'address1'=>$address1,
+            'address2'=>$address2,
+            'city'=>$city,
+            'state'=>$state,
+            'country'=>$country,
+            'pincod'=>$pincod,
+            'total_price'=>$total_price
+        ]);
+
+
+
     }
 }

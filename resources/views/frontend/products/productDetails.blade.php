@@ -42,7 +42,9 @@
                                 <i class="fa fa-shopping-cart"></i> add to cart
                             </button>
                          @endif
-                        <button class="btn btn-primary btn-rounded">Buy Now</button>
+                        <button class="btn btn-primary btn-rounded addToWishlis">
+                            <i class="fa fa-heart"></i>add to wishlist
+                        </button>
                         <div class="input-groub text-center mb-3" style="width: 130px">
                            <label>quantity</label>
                            <button style="width: 10px" class=" decrement-btn form-control ">-</button>
@@ -109,10 +111,27 @@
                            },
 
                            success:function(response){
+                               window.location.reload();
                                alert(response.status);
+
                            }
+                        });
+                    });
 
+                    $(".addToWishlis").click(function()
+                    {
+                       var product_id =$(this).closest('.product_data').find('.prod_id').val();
+                       $.ajax(
+                        {
+                           method: "post",
+                           url:"/add-to-wishlist",
+                           data:{
+                            'product_id':product_id,
+                           },
 
+                           success:function(response){
+                               alert(response.status);
+                            }
                         });
                     });
 

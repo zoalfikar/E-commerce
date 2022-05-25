@@ -27,9 +27,8 @@ class Order extends Model
         'status',
         'message',
         'tracking_no',
-
-
-
+        'payment_mode',
+        'payment_id',
     ];
 
     public function OrderItems ()

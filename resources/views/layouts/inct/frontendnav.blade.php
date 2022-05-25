@@ -11,7 +11,14 @@
             <a class="nav-link" href="{{url('/showCategories')}}">categories</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link " href="{{url('/cart')}}">cart</a>
+            <a class="nav-link " href="{{url('/cart')}}">
+                <span class="badge badge-pill bg-primary cat-items-count"></span>cart
+            </a>
+          </li>
+        <li class="nav-item ">
+            <a class="nav-link " href="{{url('/wishlist')}}">
+                <span class="badge badge-pill bg-success wishlist-items-count"></span>wishlist
+            </a>
         </li>
        </ul>
        <ul class="navbar-nav ms-auto" >
