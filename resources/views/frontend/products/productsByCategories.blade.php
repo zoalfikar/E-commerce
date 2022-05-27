@@ -10,7 +10,7 @@
 
 @section('content')
     @include('layouts/inct/frontendslider')
-    <div  style="background-color: bisque" class="container  ">
+    <div  style="background-color: bisque">
        <a href="{{url('/showCategories')}}">collection</a> / <a href="{{url('/productsOfCateg/'.$category->slug)}}">{{$category->name}}</a>
     </div>
 

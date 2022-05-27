@@ -7,6 +7,7 @@ use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\wishlistController;
 use App\Http\Controllers\Frontend\RateController;
+use App\Http\Controllers\Frontend\ReviewController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +54,11 @@ Route::middleware(['auth'])->group(function()
         Route::post('/proceed-to-pay', [CheckoutController::class,'razorpay']);
         //// rating the products
         Route::post('/rate-product', [RateController::class,'rate']);
+        ////review
+        Route::get('/add-reviw/{slug}/user-review', [ReviewController::class,'Reviw']);
+        Route::post('/add-reviw', [ReviewController::class,'addReviw']);
+        Route::get('/edit-reviw/{slug}/user-review', [ReviewController::class,'editReviw']);
+
 
  });
 

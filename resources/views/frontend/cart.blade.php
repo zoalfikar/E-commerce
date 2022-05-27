@@ -27,16 +27,16 @@
                                 <img src="{{asset('assets/uploads/product/'.$item->product->img)}}" alt="NOT FOUND " style="height: 70px; width:70px">
                             </div>
                             <div class="col-md-5">
-                                <h6>{{$item->product->name}}</h6>
+                               <a href="/productDetails/{{$item->product->Category->slug}}/{{$item->product->slug}}"> <h6>{{$item->product->name}}</h6></a>
                             </div>
                             <div class="col-md-3">
                                 <div class="input-groub text-center mb-3" style="width: 130px">
                                     <input type="hidden" class="prod_id" value="{{$item->prod_id}}">
-                                    @if ($item->product->qty > $item->prod_qty)
                                     <label for="">quantity</label>
                                     <button style="width: 10px" class=" change-value decrement-btn form-control ">-</button>
                                     <input type="text" name="quantity" style="width: 10px" class="form-control qty-input text-center" value="{{$item->prod_qty}}">
                                     <button style="width: 10px" class="change-value increment-btn form-control ">+</button>
+                                    @if ($item->product->qty >= $item->prod_qty)
                                     @php $total+=(float)$item->product->selling_price*$item->prod_qty; @endphp
                                     @else
                                     <h4>out of stuck</h4>

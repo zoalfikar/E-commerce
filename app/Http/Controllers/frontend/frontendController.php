@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Rate;
+use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
+
 class frontendController extends Controller
 {
     public function index()
@@ -38,18 +42,37 @@ class frontendController extends Controller
 
     public function productDetails($cat_slug,$prod_slug)
     {
-        if (Category::where('slug',$cat_slug)) {
-            if (Product::where('slug',$prod_slug)) {
-                $product=Product::where('slug',$prod_slug)->get()->first();
-                return view('frontend.products.productDetails',compact('product'));
+        if (Category::where('slug',$cat_slug))
+        {
+            if (Product::where('slug',$prod_slug))
+            {
+
+                $product=Product::where('slug',$prod_slug)->first();
+                $Ratings=Rate::where('prod_id',$product->id)->get();
+                $user_Rating=Rate::where('prod_id',$product->id)->where('user_id',Auth::id())->get()->first();
+                $numberOfRatings= $Ratings->count();
+                $sum=Rate::where('prod_id',$product->id)->sum('rate_value');
+                $pruduct_rate= 0;
+                if ($numberOfRatings!=0)
+                {
+                    $pruduct_rate= $sum/$numberOfRatings;
+
+                }
+
+                $reviews=Review::where('prod_id',$product->id)->get();
+                return view('frontend.products.productDetails',compact('product','numberOfRatings','pruduct_rate','user_Rating','reviews'));
+
+
             }
-            else {
+            else
+            {
                 return redirect('/')->with('status',"pruduct not found");
 
             }
 
         }
-        else {
+        else
+        {
             return redirect('/')->with('status',"category not found");
 
         }

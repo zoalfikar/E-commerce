@@ -25,7 +25,7 @@
                                 <img src="{{asset('assets/uploads/product/'.$item->product->img)}}" alt="NOT FOUND " style="height: 70px; width:70px">
                             </div>
                             <div class="col-md-3">
-                                <h6>{{$item->product->name}}</h6>
+                               <a href="/productDetails/{{$item->product->Category->slug}}/{{$item->product->slug}}"> <h6>{{$item->product->name}}</h6></a>
                             </div>
                             <div class="col-md-2">
                                     @if ($item->product->qty > 0)
