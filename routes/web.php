@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\wishlistController;
+use App\Http\Controllers\Frontend\RateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +51,8 @@ Route::middleware(['auth'])->group(function()
         Route::get('/checkout', [CheckoutController::class,'index']);
         Route::post('/placeholder', [CheckoutController::class,'placeholder']);
         Route::post('/proceed-to-pay', [CheckoutController::class,'razorpay']);
+        //// rating the products
+        Route::post('/rate-product', [RateController::class,'rate']);
 
  });
 

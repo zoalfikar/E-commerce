@@ -11,6 +11,44 @@
 
     @include('layouts/inct/frontendslider')
 
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Rating</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="rate-form" action="{{url('rate-product')}}" method="post">
+                        @csrf
+                        <input type="hidden" name="prod-id" value="{{$product->id}}">
+                        <div class="rating-css">
+                            <div class="star-icon">
+                                <input type="radio" value="1" name="product_rating" checked id="rating1">
+                                <label for="rating1" class="fa fa-star"></label>
+                                <input type="radio" value="2" name="product_rating" id="rating2">
+                                <label for="rating2" class="fa fa-star"></label>
+                                <input type="radio" value="3" name="product_rating" id="rating3">
+                                <label for="rating3" class="fa fa-star"></label>
+                                <input type="radio" value="4" name="product_rating" id="rating4">
+                                <label for="rating4" class="fa fa-star"></label>
+                                <input type="radio" value="5" name="product_rating" id="rating5">
+                                <label for="rating5" class="fa fa-star"></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" form="rate-form">rate now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div style="background-color: bisque" class="container ">
         <a href="{{url('/showCategories')}}">collection</a>/
         <a href="{{url('/productsOfCateg/'.$product->category->slug)}}">{{$product->category->name}}</a>/
@@ -29,7 +67,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-6">
                         <div class="white-box text-center"><img src="{{asset('assets/uploads/product/'.$product->img)}}" class="img-responsive" style="width:430px; height:430px"></div>
                     </div>
-                    <div class="col-lg-7 col-md-7 col-sm-6">
+                    <div class="col-lg-4 col-md-3 col-sm-6">
                         <h4 class="box-title mt-5">description</h4>
                         <p>{{$product->description}}</p>
                         <h2 class="mt-5">
@@ -51,6 +89,16 @@
                            <input type="text" name="quantity" style="width: 10px" class="form-control qty-input text-center" value="1">
                            <button style="width: 10px" class=" increment-btn form-control ">+</button>
                         </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 content-center">
+                        <h1>rating</h1>
+                        <br>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            rate this product <span><i class="fa fa-star"></i></span>
+                        </button>
+                        <br>
+
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <h3 class="box-title mt-5">General Info</h3>
