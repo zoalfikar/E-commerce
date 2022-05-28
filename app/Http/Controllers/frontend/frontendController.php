@@ -81,18 +81,25 @@ class frontendController extends Controller
     public function searchForProducts()
     {
         $products=Product::select('name')->where('status','0')->get();
-        $data=[];
+        $categories=Category::select('name')->where('status','0')->get();
+        $data_p=[];
         foreach($products as $product)
         {
-            $data[]= $product['name'];
+            $data_p[]= $product['name'];
         }
-        return  $data;
+
+        foreach($categories as $category)
+        {
+            $data_c[]= $category['name'];
+        }
+
+        return $data=array_merge($data_p,$data_c);
     }
 
     public function getProduct(Request $request)
     {
         $product_search=$request->input('search');
-
+        $category_search=$request->input('search');
         if ($product_search != '') {
             $product=Product::where("name","LIKE","%$product_search%")->first();
             if ($product)
@@ -101,12 +108,17 @@ class frontendController extends Controller
             }
             else
             {
-                return redirect()->back()->with('status',"no products matchs your search");
+                $category=Category::where("name","LIKE","%$category_search%")->first();
+                if ($category)
+                {
+                    return redirect('/productsOfCateg/'.$category->slug);
+                }
+                else
+                {
+                    return redirect()->back()->with('status',"your search machs nothings");
+                }
+
             }
-
-
-
-
 
         }
         else

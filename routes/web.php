@@ -30,46 +30,40 @@ Route::middleware(['verified'])->group( function () {
     Route::post('/get-product',[frontendController::class,'getProduct']);
 });
 
-
-
-
-
-
 Route::middleware(['auth','verified'])->group(function()
-
 {
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-        //routes for cart
-        Route::get('/cart', [CartController::class,'showCart']);
-        Route::post('/add-to-cart',[CartController::class,'addProduct']);
-        Route::post('/delet-from-cart',[CartController::class,'deletProduct']);
-        Route::post('/update-cart',[CartController::class,'updateProduct']);
-        Route::get('/get-cart-count', [CartController::class,'CartCount']);
-        ///////
-        Route::get('/orders', [UserController::class,'index']);
-        Route::get('/order-details/{id}', [UserController::class,'orderDetails']);
-        ////
-        Route::get('/wishlist', [wishlistController::class,'wishlist']);
-        Route::post('/add-to-wishlist', [wishlistController::class,'addTOwishlist']);
-        Route::post('/delet-from-wishlist',[wishlistController::class,'deletFromWishlis']);
-        Route::get('/get-wishlist-count', [wishlistController::class,'wishlistCount']);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    //routes for cart
+    Route::get('/cart', [CartController::class,'showCart']);
+    Route::post('/add-to-cart',[CartController::class,'addProduct']);
+    Route::post('/delet-from-cart',[CartController::class,'deletProduct']);
+    Route::post('/update-cart',[CartController::class,'updateProduct']);
+    Route::get('/get-cart-count', [CartController::class,'CartCount']);
+    ///////
+    Route::get('/orders', [UserController::class,'index']);
+    Route::get('/order-details/{id}', [UserController::class,'orderDetails']);
+    ////
+    Route::get('/wishlist', [wishlistController::class,'wishlist']);
+    Route::post('/add-to-wishlist', [wishlistController::class,'addTOwishlist']);
+    Route::post('/delet-from-wishlist',[wishlistController::class,'deletFromWishlis']);
+    Route::get('/get-wishlist-count', [wishlistController::class,'wishlistCount']);
 
-        ////routes for checkout
-        Route::get('/checkout', [CheckoutController::class,'index']);
-        Route::post('/placeholder', [CheckoutController::class,'placeholder']);
-        Route::post('/proceed-to-pay', [CheckoutController::class,'razorpay']);
-        //// rating the products
-        Route::post('/rate-product', [RateController::class,'rate']);
-        ////review
-        Route::get('/add-reviw/{slug}/user-review', [ReviewController::class,'Reviw']);
-        Route::post('/add-reviw', [ReviewController::class,'addReviw']);
-        Route::get('/edit-reviw/{slug}/user-review', [ReviewController::class,'editReviw']);
+    ////routes for checkout
+    Route::get('/checkout', [CheckoutController::class,'index']);
+    Route::post('/placeholder', [CheckoutController::class,'placeholder']);
+    Route::post('/proceed-to-pay', [CheckoutController::class,'razorpay']);
+    //// rating the products
+    Route::post('/rate-product', [RateController::class,'rate']);
+    ////review
+    Route::get('/add-reviw/{slug}/user-review', [ReviewController::class,'Reviw']);
+    Route::post('/add-reviw', [ReviewController::class,'addReviw']);
+    Route::get('/edit-reviw/{slug}/user-review', [ReviewController::class,'editReviw']);
 
 
- });
+});
+
 
 Auth::routes(['verify' => true]);
-
 
 
 Route::group(['middleware' => ['auth','isAdmin']], function () {
