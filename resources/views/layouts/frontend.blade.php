@@ -28,6 +28,9 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
         <!-- CSS Files -->
         <link id="pagestyle" href={{asset('assets/css/material-dashboard.css')}} rel="stylesheet" />
+        <!--JQUERY CSS-->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
         <style>
 
             /* rating */
@@ -88,6 +91,17 @@
                 color: #728299!important;
             }
 
+            .search-bar{
+                width:30%; margin-left:11cm;
+                background-color:aliceblue;
+                padding-right:20px;
+                padding-left:20px;
+                border-radius: 25px;
+            }
+            .ui-menu{
+                z-index: 3500; !important;
+            }
+
         </style>
 
     </head>
@@ -112,6 +126,31 @@
         <script src="{{asset('assets/js/jquery-3.6.0.min.js')}}"></script>
         <script src={{asset('frontend/js/bootstrap.bundle.min.js')}}></script>
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
+
+        <!--JQUERY AUTO COMPLETE-->
+        <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+        <script>
+                var availableTags = [ ];
+                $.ajax({
+                    type: "GET",
+                    url: "/search-products",
+                    success: function (response)
+                    {
+                        startAoutoComplete(response);
+                    }
+                });
+                function startAoutoComplete(availableTags)
+                {
+                    $( "#search_product" ).autocomplete(
+                    {
+                        source: availableTags
+                    });
+                }
+
+        </script>
+        <!--End JQUERY AUTO COMPLETE-->
+
+
         <script>
             $(document).ready(function ()
                 {

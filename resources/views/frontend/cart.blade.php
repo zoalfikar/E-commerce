@@ -15,9 +15,9 @@
         <a class="btn btn-primary float-end" href="{{url()->previous()}}">back</a>
     </div>
 
-    <div class="container my-5">
+    <div class="container card-reload my-5">
         @if (count($cartIteams)>0)
-            <div class="card shadow">
+            <div class="card shadow ">
                 <div class="card-body">
                     @php $total=0;    @endphp
                     @foreach ($cartIteams as $item)
@@ -58,7 +58,7 @@
         @else
             <div class="card text-center">
                 <h2>your <i class="fa fa-shopping-cart"></i> card is empty</h2>
-                <div class="card-foter">>
+                <div class="card-foter">
                     <a href="{{url('showCategories')}} " class="btn btn-outline-primary float-end">continue to shoping</a>
                 </div>
             </div
@@ -77,6 +77,26 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
             });
+
+            function loadCart()
+            {
+                $.ajax(
+                    {
+                        method: "get",
+                        url:"/get-cart-count",
+                        success:function(response)
+                        {
+                            if (response.status>0)
+                            {
+                                $('.cat-items-count').html( response.status);
+                            } else
+                            {
+                                $('.cat-items-count').html('');
+                            }
+                        }
+
+                    });
+            }
 
 
             $(".increment-btn").click(function()
@@ -107,21 +127,27 @@
                 });
 
 
-                $(".delet-cart-item").click(function()
+
+                $(document).on('click','.delet-cart-item' ,function (e)
+
                 {
-                    var inc_value=$(this).closest('.product_data').find('.prod_id').val();
+                    e.preventDefault();
+                    var value=$(this).closest('.product_data').find('.prod_id').val();
                     $.ajax(
                         {
-                           method: "POST",
-                           url:"/delet-from-cart",
-                           data:{
-                            'prod_id':inc_value,
-                           },
+                            method: "POST",
+                            url:"/delet-from-cart",
+                            data:{
+                            'prod_id':value,
+                            },
 
-                           success:function(response){
-                               window.location.reload();
-                               swal("",response.status,"success");
-                           }
+                            success:function(response)
+                            {
+                                //window.location.reload();
+                                loadCart();
+                                $(".card-reload").load(location.href+" .card-reload");
+                                swal("",response.status,"success");
+                            }
 
                         });
                 });

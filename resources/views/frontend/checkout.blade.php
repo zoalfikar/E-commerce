@@ -178,9 +178,11 @@
                                     'payment_id':details.id,
                                 },
                                 success: function (response) {
-                                    swal( response.status);
-                                    window.location.href="/";
-
+                                    swal( response.status)
+                                    .then((value) =>
+                                    {
+                                        window.location.href="/";
+                                    });
                                 }
                             });
 
@@ -387,10 +389,13 @@
                                         'payment_mode':"pay by razorpay",
                                         'payment_id':responsea.razorpay_payment_id,
                                     },
-                                    success: function (responseb) {
-                                        swal( responseb.status);
-                                        window.location.href="/";
-
+                                    success: function (responseb)
+                                    {
+                                        swal( responseb.status)
+                                        .then((value) =>
+                                        {
+                                            window.location.href="/";
+                                        });
                                     }
                                 });
                             },

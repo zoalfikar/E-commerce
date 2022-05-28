@@ -77,4 +77,41 @@ class frontendController extends Controller
 
         }
     }
+
+    public function searchForProducts()
+    {
+        $products=Product::select('name')->where('status','0')->get();
+        $data=[];
+        foreach($products as $product)
+        {
+            $data[]= $product['name'];
+        }
+        return  $data;
+    }
+
+    public function getProduct(Request $request)
+    {
+        $product_search=$request->input('search');
+
+        if ($product_search != '') {
+            $product=Product::where("name","LIKE","%$product_search%")->first();
+            if ($product)
+            {
+                return redirect('/productDetails/'.$product->category->slug.'/'.$product->slug);
+            }
+            else
+            {
+                return redirect()->back()->with('status',"no products matchs your search");
+            }
+
+
+
+
+
+        }
+        else
+        {
+            return redirect()->back();
+        }
+    }
 }

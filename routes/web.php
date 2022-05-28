@@ -24,7 +24,9 @@ Route::get('/',[frontendController::class,'index']);
 Route::get('/showCategories',[frontendController::class,'showCategories']);
 Route::get('/productsOfCateg/{slug}',[frontendController::class,'productsOfCateg']);
 Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'productDetails']);
-
+//for search
+Route::get('/search-products',[frontendController::class,'searchForProducts']);
+Route::post('/get-product',[frontendController::class,'getProduct']);
 
 
 

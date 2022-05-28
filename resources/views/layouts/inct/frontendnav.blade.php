@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="collapse navbar-collapse" id="navbarNav">
+
       <ul class="navbar-nav" >
         <li class="nav-item ">
           <a  class="nav-link  " href="{{url('/')}}">Home </a>
@@ -14,15 +14,24 @@
             <a class="nav-link " href="{{url('/cart')}}">
                 <span class="badge badge-pill bg-primary cat-items-count"></span>cart
             </a>
-          </li>
+        </li>
         <li class="nav-item ">
             <a class="nav-link " href="{{url('/wishlist')}}">
                 <span class="badge badge-pill bg-success wishlist-items-count"></span>wishlist
             </a>
         </li>
-       </ul>
+    </ul>
+    <div class="search-bar">
+        <form action="{{url('/get-product')}}" method="POST">
+            @csrf
+            <div class="input-group">
+                <input  type="search" name="search" id="search_product" class="form-control" placeholder="search products" aria-label="Username" aria-describedby="basic-addon1">
+                <button type="submit" class="input-group-text" ><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+    </div>
        <ul class="navbar-nav ms-auto" >
-
+           <div class="collapse navbar-collapse" id="navbarNav">
         @guest
 
         <li class="nav-item">
