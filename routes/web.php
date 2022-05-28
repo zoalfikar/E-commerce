@@ -18,24 +18,28 @@ use App\Http\Controllers\Frontend\ReviewController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware(['verified'])->group( function () {
 
-//routes for products and categories
-Route::get('/',[frontendController::class,'index']);
-Route::get('/showCategories',[frontendController::class,'showCategories']);
-Route::get('/productsOfCateg/{slug}',[frontendController::class,'productsOfCateg']);
-Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'productDetails']);
-//for search
-Route::get('/search-products',[frontendController::class,'searchForProducts']);
-Route::post('/get-product',[frontendController::class,'getProduct']);
-
-
-
-
+    //routes for products and categories
+    Route::get('/',[frontendController::class,'index']);
+    Route::get('/showCategories',[frontendController::class,'showCategories']);
+    Route::get('/productsOfCateg/{slug}',[frontendController::class,'productsOfCateg']);
+    Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'productDetails']);
+    //for search
+    Route::get('/search-products',[frontendController::class,'searchForProducts']);
+    Route::post('/get-product',[frontendController::class,'getProduct']);
+});
 
 
-Route::middleware(['auth'])->group(function()
-{       //routes for cart
 
+
+
+
+Route::middleware(['auth','verified'])->group(function()
+
+{
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        //routes for cart
         Route::get('/cart', [CartController::class,'showCart']);
         Route::post('/add-to-cart',[CartController::class,'addProduct']);
         Route::post('/delet-from-cart',[CartController::class,'deletProduct']);
@@ -64,12 +68,8 @@ Route::middleware(['auth'])->group(function()
 
  });
 
+Auth::routes(['verify' => true]);
 
-
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::group(['middleware' => ['auth','isAdmin']], function () {
