@@ -83,11 +83,11 @@
                 <h3 class="card-title">{{$product->name}}</h3>
                 <h6 class="card-subtitle">{{$product->small_description}}</h6>
                 <div class="row">
-                    <div class="col-lg-5 col-md-5 col-sm-6">
+                    <div class="col-lg-5 col-md-6 col-sm-6">
                         <div class="white-box text-center"><img src="{{asset('assets/uploads/product/'.$product->img)}}" class="img-responsive" style="width:430px; height:430px"></div>
                     </div>
-                    <div class="col-lg-4 col-md-3 col-sm-6">
-                        <h4 class="box-title mt-5">description</h4>
+                    <div style="position: relative; padding-left:1cm"  class="col-lg-7 col-md-6 col-sm-6 ">
+                        <h4 class="box-title mt-2">description</h4>
                         <p>{{$product->description}}</p>
                         <h2 class="mt-5">
                             <small class="text-success"><s>{{$product->orginal_price}}</s></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -95,11 +95,11 @@
                         </h2>
                         <input type="hidden" value="{{$product->id}}" class="prod_id">
                         @if ($product->qty>0)
-                            <button class=" addToCartBtn btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
+                            <button class="  mt-4 addToCartBtn btn btn-dark btn-rounded mr-1" data-toggle="tooltip" title="" data-original-title="Add to cart">
                                 <i class="fa fa-shopping-cart"></i> add to cart
                             </button>
                          @endif
-                        <button class="btn btn-primary btn-rounded addToWishlis">
+                        <button class=" mt-4 btn btn-primary btn-rounded addToWishlis">
                             <i class="fa fa-heart"></i>add to wishlist
                         </button>
                         <div class="input-groub text-center mb-3" style="width: 130px">
@@ -109,7 +109,7 @@
                            <button style="width: 10px" class=" increment-btn form-control ">+</button>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-6 content-center">
+                    <div class="col-lg-5 col-md-6 col-sm-6 mt-3 content-center">
 
                         <h5>rating</h4>
                         <span style="color: rgb(109, 0, 182)" >{{$numberOfRatings}}</span>&nbsp; people have rated this product
@@ -121,14 +121,11 @@
                             <i class="fa fa-star"></i>
                         @endfor
                         <br>
-
-                        <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             rate this product <span><i class="fa fa-star"></i></span>
                         </button>
                         <br>
                         <a href="{{url('add-reviw/'.$product->slug.'/user-review')}}" class="btn btn-primary">add review</a>
-
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <h3 class="box-title mt-5">General Info</h3>

@@ -25,7 +25,7 @@
         <form action="{{url('/get-product')}}" method="POST">
             @csrf
             <div class="input-group">
-                <input  type="search" name="search" id="search_product" class="form-control" placeholder="search products" aria-label="Username" aria-describedby="basic-addon1">
+                <input  type="search" name="search" id="search_product" class="form-control" placeholder="search" aria-label="Username" aria-describedby="basic-addon1">
                 <button type="submit" class="input-group-text" ><i class="fa fa-search"></i></button>
             </div>
         </form>
