@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Events\UserComplain;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Rate;
 use App\Models\Review;
+use App\Rules\messegeLength;
 use Illuminate\Support\Facades\Auth;
 
 class frontendController extends Controller
@@ -125,5 +128,47 @@ class frontendController extends Controller
         {
             return redirect()->back();
         }
+    }
+
+    public function complain ($id)
+    {
+
+        $product=Product::find($id);
+        if ($product)
+        {
+            $verify_purchase=Order::where('user_id',Auth::id())
+            ->join('order_items','orders.id','order_items.order_id')
+            ->where('order_items.prod_id',$product->id)->get();
+            if ($verify_purchase->count()>0) {
+                return view('frontend.complaints.complaint',compact('product'));
+            }
+            else
+            {
+                return redirect()->back()->with('status',"you cant complain about this");
+            }
+        }
+
+        else
+
+        {
+            return redirect()->back()->with('status',"your request faildown");
+        }
+
+
+
+    }
+
+    public function sendComplain(Request $request)
+
+    {
+
+        $validation=$request->validate([
+            'complain'=> ['required', new messegeLength ]
+        ]);
+
+        event(new UserComplain($request->input('complain'),$request->input('prod_id')));
+
+        return redirect()->back()->with('status',"your complaint has been sent");
+
     }
 }

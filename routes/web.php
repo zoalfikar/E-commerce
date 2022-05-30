@@ -58,6 +58,9 @@ Route::middleware(['auth','verified'])->group(function()
     Route::get('/add-reviw/{slug}/user-review', [ReviewController::class,'Reviw']);
     Route::post('/add-reviw', [ReviewController::class,'addReviw']);
     Route::get('/edit-reviw/{slug}/user-review', [ReviewController::class,'editReviw']);
+    ////complaints
+    Route::get('/add-complain/{id}',[frontendController::class,'complain']);
+    Route::post('/complain',[frontendController::class,'sendComplain']);
 
 
 });
@@ -90,4 +93,6 @@ Route::group(['middleware' => ['auth','isAdmin']], function () {
     /////users
     Route::get('/users', [App\Http\Controllers\admin\FrontendController::class, 'users']);
     Route::get('/user-detail/{id}', [App\Http\Controllers\admin\FrontendController::class, 'userDetails']);
+    Route::get('/complaimts', [App\Http\Controllers\admin\FrontendController::class, 'showcomplaints']);
+
 });

@@ -126,6 +126,9 @@
                         </button>
                         <br>
                         <a href="{{url('add-reviw/'.$product->slug.'/user-review')}}" class="btn btn-primary">add review</a>
+                        <a href="{{url('add-complain/'.$product->id)}}" class="btn btn-danger">
+                            File a complaint
+                        </a>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <h3 class="box-title mt-5">General Info</h3>
