@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Language;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -41,6 +42,17 @@ function langDir()
     $lang=Language::Active()->where('abbe',lang())->first();
     return $lang->direction;
 
+}
+function isAdmin()
+{
+    if(Auth::user()->role_as == '1')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 
