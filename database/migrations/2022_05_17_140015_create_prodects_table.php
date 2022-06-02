@@ -31,6 +31,7 @@ class CreateProdectsTable extends Migration
             $table->mediumText('meta_descrip')->nullable();
             $table->mediumText('meta_kewwords')->nullable();
             $table->timestamps();
+            $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade')
         });
     }
 

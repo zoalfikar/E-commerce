@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <div class="card">
     <div class="card-header">
          <h1>Categories</h1>
@@ -9,10 +8,10 @@
     <div class="card-body">
         <table class="table table-striped">
             <tr>
-                <th class=" w-10">Name</th>
-                <th class=" w-30">description</th>
-                <th>Image</th>
-                <th>Action</th>
+                <th class=" w-10">الاسم</th>
+                <th class=" w-30">الوصف</th>
+                <th>صورة</th>
+                <th>عملية</th>
             </tr>
 
 
@@ -43,8 +42,8 @@
                             </div>
                         </div>
                     </div>
-                    <a  href="edit-category/{{$item->id}}" class="btn">Edite</a>
-                    <a  href="delete-category/{{$item->id}}" class="btn">Delete</a>
+                    <a  href="edit-category/{{$item->id}}" class="btn">تعديل</a>
+                    <a  href="delete-category/{{$item->id}}" class="btn">حذف</a>
 
                   </td>
 

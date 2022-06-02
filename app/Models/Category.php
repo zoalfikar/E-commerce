@@ -13,6 +13,8 @@ class Category extends Model
     protected $table ='categories';
 
     protected $fillable = [
+        'languages_abbe',
+        'translation_of',
         'name',
         'slug',
         'description',
@@ -23,4 +25,10 @@ class Category extends Model
         'meta_descrip',
         'meta_kewwords'
     ];
+
+    public function scopeArCat($query)
+    {
+        return $query->where('languages_abbe','ar');
+    }
+
 }

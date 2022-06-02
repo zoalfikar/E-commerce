@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{lang()}}" dir="{{langDir()}}">
 
     <head>
         <meta charset="utf-8">
@@ -108,7 +108,11 @@
 
     <body class="g-sidenav-show  bg-white">
         <div class="content">
-            @include('layouts/inct/frontendnav')
+            @if (lang()=='ar')
+                @include('arabic/layouts/inct/frontendnav')
+            @else
+                @include('layouts/inct/frontendnav')
+            @endif
 
             @yield('content')
 
@@ -186,26 +190,49 @@
                         function loadWishlist()
                         {
                             $.ajax(
+                            {
+                                method: "get",
+                                url:"/get-wishlist-count",
+                                success:function(response)
                                 {
-                                   method: "get",
-                                   url:"/get-wishlist-count",
-                                   success:function(response)
-                                   {
-                                       if (response.status>0)
-                                       {
-                                           $('.wishlist-items-count').html( response.status);
-                                       }
+                                    if (response.status>0)
+                                    {
+                                        $('.wishlist-items-count').html( response.status);
+                                    }
 
-                                       else
+                                    else
 
-                                       {
-                                        $('.wishlist-items-count').html('');
-                                       }
+                                    {
+                                    $('.wishlist-items-count').html('');
+                                    }
 
-                                   }
+                                }
 
-                                });
-                        }
+                            });
+                    }
+
+                    $('#lang').change(function (e)
+                    {
+                        e.preventDefault();
+                        var lang =$('#lang').val();
+                        $.ajax(
+                        {
+                            method: "POST",
+                            url:"/chang-lang",
+                            data:
+                            {
+                                'lang':lang,
+                            },
+                            success:function(response){
+                                window.location.reload();
+
+                            }
+                        });
+
+                    });
+
+
+
 
                 });
 

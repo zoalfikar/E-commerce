@@ -14,6 +14,11 @@ class ProductController extends Controller
     public function index() {
 
         $Products=Product::all();
+
+        if (lang()=='ar') {
+            $Products=Product::ArProdCat()->get();
+            return view('arabic.admin.products.index',compact('Products'));
+        }
         return view('admin.products.index',compact('Products'));
 
     }
@@ -22,14 +27,26 @@ class ProductController extends Controller
      public function addProduct() {
 
         $categories=Category::all();
+        if (lang()=='ar')
+        {
+            $categories=Category::ArCat()->get();
+            return view('arabic.admin.products.addProduct',compact('categories'));
+        }
+
         return view('admin.products.addProduct',compact('categories'));
 
     }
 
 
-    public function editProduct($id) {
+    public function editProduct($id)
+    {
 
         $product=Product::find($id);
+        if (lang()=='ar')
+        {
+
+            return view('arabic.admin.products.editProduct',compact('product'));
+        }
         return view('admin.products.editProduct',compact('product'));
 
     }
@@ -61,7 +78,7 @@ class ProductController extends Controller
          $product->meta_descrip= $request->input('meta_descrip');
          $product->meta_kewwords= $request->input('meta_kewwords');
          $product->save();
-         return redirect('/products')->with('status','product inserted successfully');
+         return redirect('/products')->with('status',trans('product.success_add'));
 
     }
 
@@ -94,7 +111,7 @@ class ProductController extends Controller
             $product->meta_kewwords= $request->input('meta_kewwords');
             $product->meta_descrip= $request->input('meta_descrip');
             $product->update();
-            return redirect('/products')->with('status','product updated successfully');
+            return redirect('/products')->with('status',trans('product.success_update'));
 
         }
 
@@ -111,7 +128,7 @@ class ProductController extends Controller
                         }
                 }
             $product->delete();
-            return redirect('products')->with('status','product has deleted');
+            return redirect('products')->with('status',trans('product.success_delete'));
 
         }
 

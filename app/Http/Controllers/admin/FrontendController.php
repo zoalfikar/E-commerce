@@ -53,7 +53,6 @@ class FrontendController extends Controller
     public function showcomplaints()
     {
         $complaints=Complain::all();
-
         return view('admin.complaints.complaintsTable',compact('complaints'));
 
 

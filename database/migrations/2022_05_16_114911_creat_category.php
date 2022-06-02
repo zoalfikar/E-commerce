@@ -15,6 +15,8 @@ class CreatCategory extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->string('languages_abbe')->nullable();
+            $table->string('translation_of')->nullable();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
             $table->longText('description')->nullable();

@@ -17,6 +17,8 @@ class CreateWishlistsTable extends Migration
             $table->id();
             $table->string('user_id');
             $table->string('prod_id');
+            $table->foreign('prod_id')->references('id')->on('prodects')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

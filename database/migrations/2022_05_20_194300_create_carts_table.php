@@ -19,6 +19,9 @@ class CreateCartsTable extends Migration
             $table->string('prod_id');
             $table->string('prod_qty');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('prod_id')->references('id')->on('prodects')->onDelete('cascade')->onUpdate('cascade');
+
         });
     }
 

@@ -25,6 +25,23 @@ class frontendController extends Controller
     public function showCategories()
     {
         $categories=Category::where('status','0')->get();
+        if (lang()=='ar')
+        {
+            $categories=Category::where('status','0')->ArCat()->get();
+            return view('arabic.frontend.categories',compact('categories'));
+        }
+        return view('frontend.categories',compact('categories'));
+    }
+
+    public function showAllCategories()
+    {
+        $categories=Category::where('status','0')->get();
+        // $categories=allWoutRepeat();
+        if (lang()=='ar')
+        {
+
+        return view('arabic.frontend.categories',compact('categories'));
+        }
         return view('frontend.categories',compact('categories'));
     }
 
@@ -32,6 +49,13 @@ class frontendController extends Controller
     {
         if (Category::where('slug',$slug)->exists())
         {
+            if (lang()=='ar')
+            {
+                $category=Category::where('slug',$slug)->ArCat()->first();
+                $products=Product::where('cat_id',$category->id)->get();
+                $categories=Category::where('status','0')->ArCat()->get();
+                return view('arabic.frontend.products.productsByCategories',compact('category','products'));
+            }
             $category=Category::where('slug',$slug)->first();
             $products=Product::where('cat_id',$category->id)->get();
             return view('frontend.products.productsByCategories',compact('category','products'));

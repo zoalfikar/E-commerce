@@ -72,6 +72,22 @@
               <span class="nav-link-text ms-1">complaimts</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-white {{Request::is('/languages')?'active':''}}" href="{{url('/languages')}}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="badge badge-pill bg-success">{{App\Models\Language::count()}}</i>
+              </div>
+              <span class="nav-link-text ms-1">languages</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white {{Request::is('/add-language')?'active':''}}" href="{{url('/add-language')}}">
+              <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                <i class="fa fa-language"></i>
+              </div>
+              <span class="nav-link-text ms-1">add language</span>
+            </a>
+          </li>
       </ul>
     </div>
   </aside>

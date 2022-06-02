@@ -34,4 +34,9 @@ class Product extends Model
         return $this->belongsTo(Category::class,'cat_id','id');
 
     }
+
+    public function scopeArProdCat($query)
+    {
+        return $query->select('prodects.*')->join('categories','categories.id', 'prodects.cat_id')->where('languages_abbe','ar');
+    }
 }
