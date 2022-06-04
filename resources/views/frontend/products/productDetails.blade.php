@@ -76,8 +76,11 @@
         <div class="card product_data">
             <div class="card-header">
                 @if ($product->trending==1)
-                <label style="font-size: 16px; background-color:rgb(7, 211, 194)" class="float-end"> &nbsp; trending &nbsp; </label>
-            @endif
+                    <label style="font-size: 16px; background-color:rgb(7, 211, 194)" class="float-end"> &nbsp; trending &nbsp; </label>
+                @endif
+                @if (isAdmin())
+                    <button class="btn btn-danger" onclick="prevent()">prevent</button>
+                @endif
             </div>
             <div class="card-body ">
                 <h3 class="card-title">{{$product->name}}</h3>

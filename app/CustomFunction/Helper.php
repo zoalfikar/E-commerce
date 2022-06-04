@@ -1,7 +1,11 @@
 <?php
 
 use App\Models\Category;
+use App\Models\CategoryVisit;
 use App\Models\Language;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -21,12 +25,20 @@ function changLang($lang)
 
 //store photo
 
-function CategoryPhoto($image ,$request)
+function CategoryPhoto($request)
 {
-    $file=$request->file($image);
+    $file=$request->file('image');
     $ext=$file->getClientOriginalExtension();
     $filename=time().'.'.$ext;
     $file->move(public_path('assets/uploads/category'), $filename);
+    return $filename;
+}
+function productPhoto($request)
+{
+    $file=$request->file('image');
+    $ext=$file->getClientOriginalExtension();
+    $filename=time().'.'.$ext;
+    $file->move(public_path('assets/uploads/products'), $filename);
     return $filename;
 }
 
@@ -53,7 +65,26 @@ function isAdmin()
     {
         return false;
     }
+
 }
+
+function trendingProduct($id)
+{
+    //Dynamic method for calculating if a product is popular
+
+    $PurchasedPod = Order::select('user_id')->distinct('user_id')->whereNotNull('payment_mode')->join('order_items','order_items.order_id','orders.id')->where('prod_id', $id)->count();
+    $PurchasedPods = OrderItem::select('prod_id')->distinct('prod_id')->join('orders','orders.id','order_items.order_id')->select('user_id')->whereNotNull('payment_mode')->count();
+    return $PurchasedPod/$PurchasedPods >= 0.15;
+
+}
+function pupularCategory($id)
+{
+    //Dynamic method for calculating if a category is popular
+    $visitedcat=CategoryVisit::where('cat_id',$id)->count();
+    $visitedcats=CategoryVisit::all()->count();
+    return $visitedcat/$visitedcats >= 0.09;
+}
+
 
 
 
