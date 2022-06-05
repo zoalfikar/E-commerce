@@ -14,6 +14,9 @@ class wishlistController extends Controller
     public function wishlist () {
 
         $prods=wishlist::where('user_id',Auth::id())->get();
+        if (lang()=='ar') {
+            return view('arabic.frontend.wishlist',compact('prods'));
+        }
         return view('frontend.wishlist',compact('prods'));
     }
 

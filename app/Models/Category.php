@@ -23,7 +23,8 @@ class Category extends Model
         'img',
         'meta_title',
         'meta_descrip',
-        'meta_kewwords'
+        'meta_kewwords',
+        'visited'
     ];
 
     public function scopeArCat($query)

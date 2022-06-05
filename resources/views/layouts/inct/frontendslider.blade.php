@@ -6,10 +6,10 @@
 </div>
 <div class="carousel-inner">
     <div class="carousel-item active">
-    <img style="height: 300px" src="{{asset('frontend\imgs\1.jpg')}}" class="d-block w-100" alt="...">
+    <img style="height: 300px" src="{{asset('frontend\imgs\1.webp')}}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
-    <img style="height: 300px" src="{{asset('frontend\imgs\2.jpg')}}" class="d-block w-100" alt="...">
+    <img style="height: 300px" src="{{asset('frontend\imgs\2.webp')}}" class="d-block w-100" alt="...">
     </div>
     <div class="carousel-item">
     <img style="height: 300px" src="{{asset('frontend\imgs\3.png')}}" class="d-block w-100" alt="...">

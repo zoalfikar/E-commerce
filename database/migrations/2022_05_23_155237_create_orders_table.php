@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
+            $table->bigInteger('user_id')->unsigned();
             $table->string('fname');
             $table->string('lname');
             $table->string('email');
@@ -29,7 +29,6 @@ class CreateOrdersTable extends Migration
             $table->string('total_price');
             $table->string('payment_mode')->nullable();
             $table->string('payment_id')->nullable();
-            $table->string('pincode');
             $table->tinyInteger('status')->default('0');
             $table->string('message')->nullable();
             $table->string('tracking_no');

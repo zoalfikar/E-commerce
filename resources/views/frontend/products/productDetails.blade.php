@@ -79,8 +79,12 @@
                     <label style="font-size: 16px; background-color:rgb(7, 211, 194)" class="float-end"> &nbsp; trending &nbsp; </label>
                 @endif
                 @if (isAdmin())
-                    <button class="btn btn-danger" onclick="prevent()">prevent</button>
+                    @if ($product->status=='1')
+                        <button id="activeBtn" class="btn btn-primary" value="{{$product->id}}">active</button>
+                    @else
+                        <button id="preventBtn" class="btn btn-danger" value="{{$product->id}}">prevent</button>
                 @endif
+            @endif
             </div>
             <div class="card-body ">
                 <h3 class="card-title">{{$product->name}}</h3>
@@ -272,6 +276,43 @@
 
                             }
                     });
+                    $('#activeBtn').click(function (e) {
+                    e.preventDefault();
+                    var value=$(this).closest('.card').find('#activeBtn').val();
+                    $.ajax(
+                    {
+                        method: "post",
+                        url: "active-product",
+                        data:
+                        {
+                            "prod_id":value,
+                        },
+                        success: function (response)
+                        {
+                            $(".row").load(location.href+" .row");
+                        }
+                    });
+
+                });
+
+                $('#preventBtn').click(function (e) {
+                    e.preventDefault();
+                    var value=$(this).closest('.card').find('#preventBtn').val();
+                    $.ajax(
+                    {
+                        method: "post",
+                        url: "prevent-product",
+                        data:
+                        {
+                            "prod_id":value,
+                        },
+                        success: function (response)
+                        {
+                            $(".row").load(location.href+" .row");
+                        }
+                    });
+
+                });
 
             });
 

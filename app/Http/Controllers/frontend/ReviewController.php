@@ -22,7 +22,9 @@ class ReviewController extends Controller
         $verify_purchase=Order::where('user_id',Auth::id())
             ->join('order_items','orders.id','order_items.order_id')
             ->where('order_items.prod_id',$prod_id)->get();
-
+            if (lang()=='ar') {
+                return view('arabic.frontend.reviews.index', compact('prod_chek','verify_purchase'));
+            }
             return view('frontend.reviews.index', compact('prod_chek','verify_purchase'));
 
         }
@@ -87,7 +89,9 @@ class ReviewController extends Controller
         $verify_purchase=Order::where('user_id',Auth::id())
             ->join('order_items','orders.id','order_items.order_id')
             ->where('order_items.prod_id',$prod_id)->get();
-
+            if (lang()=='ar') {
+                return view('arabic.frontend.reviews.edit', compact('prod_chek','verify_purchase','review'));
+            }
             return view('frontend.reviews.edit', compact('prod_chek','verify_purchase','review'));
 
         }

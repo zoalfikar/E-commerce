@@ -4,8 +4,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rules\Exists;
 
 class ProductController extends Controller
 {
@@ -130,6 +132,75 @@ class ProductController extends Controller
             $product->delete();
             return redirect('products')->with('status',trans('product.success_delete'));
 
+        }
+
+        public function transletIndexProduct($id,$abbe)
+        {
+            if ($abbe!==lang())  //Check that the translation is not in the same language
+            {
+                $product=Product::find($id);
+                $categories=Category::all();
+                $trans=false;
+                $idtrans='';
+                foreach ($categories as $category) // check if categor of this has been translated
+                {
+                    if ($category->id== $product->category->translation_of) {
+                        $trans=true;
+                        $idtrans=$category->id;
+                    }
+
+                    if($category->translation_of== $product->category->id)
+                    {
+                        $idtrans=$category->id;
+                        $trans=true;
+                    }
+                }
+                if($trans)
+                {
+                    $transcategory=Category::find($idtrans);
+                    return view('admin.products.transelate' , compact('product','transcategory'));
+                }
+                else
+                {
+                    return redirect()->back()->with('status','translet category first');
+                }
+
+            }
+            else
+            {
+                return redirect()->back()->with('status',trans('product.translete_errore'));
+            }
+        }
+        public function transelateProduct ()
+        {
+
+        }
+        public function trendingProduct(Request $req)
+        {
+            $order=Order::where('payment_id',$req->payment_id)->first();
+            foreach ($order->OrderItems as $produt ) {
+                if(trendingProduct($produt->prod_id))
+                {
+                    $produt->trending=1;
+                    $produt->save();
+                }
+            }
+
+
+        }
+        public function activeCategory(Request $req)
+        {
+            $cat=Product::find($req->prod_id);
+            $cat->status='0';
+            $cat->save();
+            return response()->json();
+        }
+        public function preventCategory(Request $req)
+        {
+            $cat=Product::find($req->prod_id);
+            $cat->status='1';
+            $cat->save();
+            return response()->json();
         }
 
 }

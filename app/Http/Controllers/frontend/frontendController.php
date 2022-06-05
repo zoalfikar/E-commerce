@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\CategoryVisit;
 use App\Models\Order;
 use App\Models\Rate;
 use App\Models\Review;
@@ -17,14 +18,23 @@ class frontendController extends Controller
 {
     public function index()
     {
-        $products=Product::where('trending','1')->take(15)->get();
-        $categories=Category::where('populer','1')->take(15)->get();
+        $products=Product::where('trending','1')->where('status','0')->take(15)->get();
+        $categories=Category::where('populer','1')->where('status','0')->take(15)->get();
+        if (lang()=='ar')
+        {
+            return view('arabic.frontend.index',compact('products','categories'));
+        }
         return view('frontend.index',compact('products','categories'));
     }
 
     public function showCategories()
     {
         $categories=Category::where('status','0')->get();
+        if (isAdmin())
+        {
+            $categories=Category::all();
+        }
+
         if (lang()=='ar')
         {
             $categories=Category::where('status','0')->ArCat()->get();
@@ -36,7 +46,10 @@ class frontendController extends Controller
     public function showAllCategories()
     {
         $categories=Category::where('status','0')->get();
-        // $categories=allWoutRepeat();
+        if (isAdmin())
+        {
+            $categories=Category::all();
+        }
         if (lang()=='ar')
         {
 
@@ -53,11 +66,39 @@ class frontendController extends Controller
             {
                 $category=Category::where('slug',$slug)->ArCat()->first();
                 $products=Product::where('cat_id',$category->id)->get();
-                $categories=Category::where('status','0')->ArCat()->get();
+                $visitedCat=CategoryVisit::where('cat_id',$category->id)->where('user_id',Auth::id())->exists();
+                if (!$visitedCat) //check if user has visited this category befor,if yes ignore
+                {
+                    $visiCategory= new CategoryVisit();
+                    $visiCategory->visited+=1;
+                    $visiCategory->user_id=Auth::id();
+                    $visiCategory->cat_id=$category->cat_id;
+                }
+                if (pupularCategory($category->id))
+                {
+                    $category->populer=1;
+                    $category->save();
+                }
+
+
                 return view('arabic.frontend.products.productsByCategories',compact('category','products'));
             }
             $category=Category::where('slug',$slug)->first();
             $products=Product::where('cat_id',$category->id)->get();
+            $visitedCat=CategoryVisit::where('cat_id',$category->id)->where('user_id',Auth::id())->exists();
+            if (!$visitedCat) //check if user has visited this category befor,if yes ignore
+            {
+                $visiCategory= new CategoryVisit();
+                $visiCategory->visited+=1;
+                $visiCategory->user_id=Auth::id();
+                $visiCategory->cat_id=$category->cat_id;
+            }
+            if (pupularCategory($category->id))
+            {
+                $category->populer=1;
+                $category->save();
+            }
+
             return view('frontend.products.productsByCategories',compact('category','products'));
         }
 
@@ -87,6 +128,10 @@ class frontendController extends Controller
                 }
 
                 $reviews=Review::where('prod_id',$product->id)->get();
+                if (lang()=='ar')
+                {
+                    return view('arabic.frontend.products.productDetails',compact('product','numberOfRatings','pruduct_rate','user_Rating','reviews'));
+                }
                 return view('frontend.products.productDetails',compact('product','numberOfRatings','pruduct_rate','user_Rating','reviews'));
 
 
@@ -164,6 +209,10 @@ class frontendController extends Controller
             ->join('order_items','orders.id','order_items.order_id')
             ->where('order_items.prod_id',$product->id)->get();
             if ($verify_purchase->count()>0) {
+                if (lang()=='ar')
+                {
+                    return view('arabic.frontend.complaints.complaint',compact('product'));
+                }
                 return view('frontend.complaints.complaint',compact('product'));
             }
             else

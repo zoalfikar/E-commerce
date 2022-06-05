@@ -145,6 +145,7 @@
                 });
                 function startAoutoComplete(availableTags)
                 {
+
                     $( "#search_product" ).autocomplete(
                     {
                         source: availableTags

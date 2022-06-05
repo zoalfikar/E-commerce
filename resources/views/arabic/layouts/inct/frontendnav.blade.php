@@ -59,9 +59,14 @@
                 @csrf
             </form>
         </li>
+        @if (isAdmin())
+        <a class="nav-link " href="{{url('/dashboard')}}">لوحة التحكم</a>
+
+        @else
         <li class="nav-item">
             <a class="nav-link " href="#">{{Auth::user()->name}}</a>
         </li>
+        @endif
 
         @endguest
 

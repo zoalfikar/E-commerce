@@ -20,7 +20,7 @@ use App\Http\Controllers\Frontend\ReviewController;
 */
 Route::get('/test',function () {
 
-    return trans('category.succsess_add');
+    return trendingProduct('11');
 });
 
 Route::middleware(['verified','lang'])->group( function () {
@@ -39,7 +39,7 @@ Route::middleware(['verified','lang'])->group( function () {
 
 });
 
-Route::middleware(['auth','verified'])->group(function()
+Route::middleware(['auth','verified','lang'])->group(function()
 {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     //routes for cart
@@ -90,7 +90,8 @@ Route::group(['middleware' => ['auth','isAdmin','lang']], function () {
     Route::get('/delete-category/{id}' ,  [App\Http\Controllers\admin\CategoryConroller::class, 'deleteCategory']);
     Route::get('/translet-category/{id}/{abbe}' ,  [App\Http\Controllers\admin\CategoryConroller::class, 'transletIndexCategory']);
     Route::post('/translet-category' ,  [App\Http\Controllers\admin\CategoryConroller::class, 'transeletCategory']);
-
+    Route::post('/active-category' ,  [App\Http\Controllers\admin\CategoryConroller::class, 'activeCategory']);
+    Route::post('/prevent-category' ,  [App\Http\Controllers\admin\CategoryConroller::class, 'preventCategory']);
     //////
     Route::get('/products', [App\Http\Controllers\admin\ProductController::class, 'index']);
     Route::get('/add-product' ,  [App\Http\Controllers\admin\ProductController::class, 'addProduct']);
@@ -98,6 +99,10 @@ Route::group(['middleware' => ['auth','isAdmin','lang']], function () {
     Route::get('/edit-product/{id}' ,  [App\Http\Controllers\admin\ProductController::class, 'editProduct']);
     Route::post('/edit-product/{id}' ,  [App\Http\Controllers\admin\ProductController::class, 'updateProduct']);
     Route::get('/delete-product/{id}' ,  [App\Http\Controllers\admin\ProductController::class, 'deleteProduct']);
+    Route::get('/translet-product/{id}/{abbe}' ,  [App\Http\Controllers\admin\ProductController::class, 'transletIndexProduct']);
+    Route::post('/trending-product' ,  [App\Http\Controllers\admin\ProductController::class, 'trendingProduct']);
+    Route::post('/active-product' ,  [App\Http\Controllers\admin\ProductController::class, 'activeProduct']);
+    Route::post('/prevent-product' ,  [App\Http\Controllers\admin\ProductController::class, 'preventProduct']);
     ///////
     Route::get('/order-list', [App\Http\Controllers\admin\FrontendController::class, 'orderList']);
     Route::get('/d-order-details/{id}', [App\Http\Controllers\admin\FrontendController::class, 'orderDetail']);

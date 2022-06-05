@@ -74,14 +74,15 @@ function trendingProduct($id)
 
     $PurchasedPod = Order::select('user_id')->distinct('user_id')->whereNotNull('payment_mode')->join('order_items','order_items.order_id','orders.id')->where('prod_id', $id)->count();
     $PurchasedPods = OrderItem::select('prod_id')->distinct('prod_id')->join('orders','orders.id','order_items.order_id')->select('user_id')->whereNotNull('payment_mode')->count();
-    return $PurchasedPod/$PurchasedPods >= 0.15;
-
+    if($PurchasedPods==0){return 0;}
+    return  $PurchasedPod/$PurchasedPods >= 0.15;
 }
 function pupularCategory($id)
 {
     //Dynamic method for calculating if a category is popular
     $visitedcat=CategoryVisit::where('cat_id',$id)->count();
     $visitedcats=CategoryVisit::all()->count();
+    if($visitedcats==0){return 0;}
     return $visitedcat/$visitedcats >= 0.09;
 }
 

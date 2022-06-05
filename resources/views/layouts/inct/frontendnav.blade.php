@@ -31,7 +31,7 @@
         </form>
     </div>
     <div class="dropdown" style="padding-left:55px;">
-        <select style="background-color:white" class="form-select form-select-sm float-end " aria-label="Default select example" id="lang" >
+        <select style="background-color:rgb(129, 131, 255)" class="form-select form-select-sm float-end " aria-label="Default select example" id="lang" >
             @php $lang=selectLan(); @endphp
             @foreach ($lang as $item)
                 <option {{$item->abbe==lang()?'selected':''}} value="{{$item->abbe}}"> {{$item->name}}</option>
@@ -59,9 +59,14 @@
                 @csrf
             </form>
         </li>
+        @if (isAdmin())
+        <a class="nav-link " href="{{url('/dashboard')}}">  Dashboard</a>
+
+        @else
         <li class="nav-item">
             <a class="nav-link " href="#">{{Auth::user()->name}}</a>
         </li>
+        @endif
 
         @endguest
 

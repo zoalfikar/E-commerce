@@ -2,7 +2,7 @@
 
 @section('title')
 
-    welcom page
+    الصفحة الرئيسية
 
 @endsection
 
@@ -14,9 +14,9 @@
 
     <div class="py-5">
         <div class="container">
-            <h1>Featured Products</h1>
+            <h1>المنتجات المميزة</h1>
             <div class="row">
-                <div class="owl-carousel my-carousel owl-theme ">
+                <div class="owl-carousel my-carousel owl-theme">
                     @foreach ($products as $product)
                         <div class="item">
                             <div class="card">
@@ -40,7 +40,7 @@
 
     <div class="py-5">
         <div class="container">
-            <h1>Trendin Categories</h1>
+            <h1>الفئات الشائعة</h1>
             <div class="row">
                 <div class="owl-carousel my-carousel owl-theme">
                     @foreach ($categories as $category)

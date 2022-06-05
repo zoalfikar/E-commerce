@@ -12,6 +12,10 @@ class CartController extends Controller
 
     public function showCart () {
         $cartIteams=Cart::where('user_id',Auth::id())->get() ;
+        if(lang()=='ar')
+        {
+            return view('arabic.frontend.cart',compact('cartIteams'));
+        }
         return view('frontend.cart',compact('cartIteams'));
 
     }

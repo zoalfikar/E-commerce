@@ -25,6 +25,9 @@ class CheckoutController extends Controller
           }
         }
         $iteamCard=Cart::where('user_id',Auth::id())->get();
+        if (lang()=='ar') {
+            return view('arabic.frontend.checkout',compact('iteamCard'));
+        }
         return view('frontend.checkout',compact('iteamCard'));
     }
     public function placeholder (Request $request)

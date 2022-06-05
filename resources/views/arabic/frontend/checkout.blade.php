@@ -2,7 +2,7 @@
 
 @section('title')
 
-    checkout
+    الدفع
 
 @endsection
 
@@ -11,8 +11,8 @@
 @section('content')
 
     <div class="container ">
-        <a href="{{url('/')}}">home</a> /
-        <a href="#"> checkout</a>
+        <a href="{{url('/')}}">الرئيسية</a> /
+        <a href="#"> الدفع</a>
     </div>
 
     <div class="container mt-5">
@@ -22,57 +22,57 @@
                 <div class="col-md-7">
                     <div class="card">
                         <div class="card-body">
-                            <h6>Basic Details</h6>
+                            <h6>المعلومات الاساسية</h6>
                             <hr>
                             <div class="row checkout-form">
                                 <div class="col-md-6">
-                                    <label for="">first name</label>
-                                    <input type="text" required value="{{Auth::user()->name}}" name="firstname" class="form-control firstname" placeholder="enter your first name">
+                                    <label for="">الاسم الاول</label>
+                                    <input type="text" required value="{{Auth::user()->name}}" name="firstname" class="form-control firstname" placeholder="ادخل اسمك الاول">
                                     <span id="fname_error" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="">last name </label>
-                                    <input type="text" required value="{{Auth::user()->last_name}}" name="lastname" class="form-control lastname" placeholder="ener your lastname">
+                                    <label for="">الاسم الاخير </label>
+                                    <input type="text" required value="{{Auth::user()->last_name}}" name="lastname" class="form-control lastname" placeholder="ادخل اسمك الاخير">
                                     <span id="lname_error" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">email</label>
-                                    <input type="text" required value="{{Auth::user()->email}}" name="email" class="form-control email" placeholder="enter your email">
+                                    <label for="">الايميل</label>
+                                    <input type="text" required value="{{Auth::user()->email}}" name="email" class="form-control email" placeholder="ادخل الايميل">
                                     <span id="email_error"  class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">phone number</label>
-                                    <input type="text" required value="{{Auth::user()->phone_number}}" name="phonenumber" class="form-control phoneNumber" placeholder="enter your phon number">
+                                    <label for="">رقم الهاتف</label>
+                                    <input type="text" required value="{{Auth::user()->phone_number}}" name="phonenumber" class="form-control phoneNumber" placeholder="ادخل رقم الهاتف">
                                     <span id="phone_error"  class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">address 1</label>
-                                    <input type="text"required value="{{Auth::user()->address1}}" name="address1" class="form-control address1" placeholder="enter your address 1">
+                                    <label for="">العنوان الاول</label>
+                                    <input type="text"required value="{{Auth::user()->address1}}" name="address1" class="form-control address1" placeholder="ادخل عنوانك الاول">
                                     <span id="addess1_error"  class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">address 2</label>
-                                    <input type="text" required value="{{Auth::user()->address2}}" name="address2" class="form-control address2" placeholder="enter your address 2">
+                                    <label for="">العنوان الثاني</label>
+                                    <input type="text" required value="{{Auth::user()->address2}}" name="address2" class="form-control address2" placeholder="ادخل عنوانك الثاني">
                                     <span id="address2_error"  class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">city</label>
-                                    <input type="text" required value="{{Auth::user()->city}}" name="city" class="form-control city" placeholder="enter your city">
+                                    <label for="">المدينة</label>
+                                    <input type="text" required value="{{Auth::user()->city}}" name="city" class="form-control city" placeholder="من اي مدينة">
                                     <span id="city_error"  class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">state</label>
-                                    <input type="text" required value="{{Auth::user()->state}}" name="state" class="form-control state" placeholder="enter your state">
+                                    <label for="">الولاية</label>
+                                    <input type="text" required value="{{Auth::user()->state}}" name="state" class="form-control state" placeholder="من اي ولاية">
                                     <span id="state_error"  class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">country</label>
-                                    <input type="text" required value="{{Auth::user()->country}}" name="country" class="form-control country" placeholder=" enter your country">
+                                    <label for="">البلد</label>
+                                    <input type="text" required value="{{Auth::user()->country}}" name="country" class="form-control country" placeholder=" من اي بلد">
                                     <span id="country_error"  class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <label for="">pin cod</label>
-                                    <input type="text" required value="{{Auth::user()->pin_code}}" name="pincod" class="form-control pincod" placeholder="enter your pin code">
+                                    <label for="">pin رمز</label>
+                                    <input type="text" required value="{{Auth::user()->pin_code}}" name="pincod" class="form-control pincod" placeholder="ادخل رمز ال pin">
                                     <span id="pincod_error"  class="text-danger"></span>
                                 </div>
                             </div>
@@ -83,13 +83,13 @@
                 <div class="col-md-5">
                     <div class="card">
                         <div class="card-body">
-                            <h6>Order Deyails</h6>
+                            <h6>تفاصيل الطلب</h6>
                             <hr>
                             <table class="table table-striped table-bordered" >
                                 <thead>
-                                    <td>Name</td>
-                                    <td>quantity</td>
-                                    <td>pric</td>
+                                    <td>الاسم</td>
+                                    <td>الكمية المطلوبة</td>
+                                    <td>السعر</td>
                                 </thead>
                                 <tbody>
                                     @foreach ($iteamCard as $item)
@@ -104,9 +104,9 @@
                             <h4></h4>
                             <br>
                             <input type="hidden" name="payment_mode"  value="COD">
-                            <button type="submit" class="btn btn-primary float-end w-100">Place Order | COD</button>
+                            <button type="submit" class="btn btn-primary float-end w-100">حفظ الطلب</button>
                             <br>
-                            <button type="button" class="btn btn-success float-end w-100 razorpay_btn">pay with razorapy</button>
+                            <button type="button" class="btn btn-success float-end w-100 razorpay_btn">ادفع عن طريق razorapy</button>
                             <div class="card-footer ">
                                 <div  id="paypal-button-container"></div>
                             </div>
@@ -392,17 +392,6 @@
                                     success: function (responseb)
                                     {
                                         swal( responseb.status)
-                                        $.ajax({
-                                            method: "post",
-                                            url: "/trending-product",
-                                            data: {
-                                                'payment_id':responsea.razorpay_payment_id,
-                                            },
-                                            dataType: "dataType",
-                                            success: function (response) {
-
-                                            }
-                                        });
                                         .then((value) =>
                                         {
                                             window.location.href="/";

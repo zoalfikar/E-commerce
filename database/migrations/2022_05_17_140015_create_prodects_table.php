@@ -15,7 +15,7 @@ class CreateProdectsTable extends Migration
     {
         Schema::create('prodects', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('cat_id');
+            $table->bigInteger('cat_id')->unsigned();
             $table->string('name')->nullable();
             $table->string('slug');
             $table->mediumText('small_description')->nullable();
@@ -31,7 +31,7 @@ class CreateProdectsTable extends Migration
             $table->mediumText('meta_descrip')->nullable();
             $table->mediumText('meta_kewwords')->nullable();
             $table->timestamps();
-            $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade')
+            $table->foreign('cat_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

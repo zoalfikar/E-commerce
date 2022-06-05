@@ -154,5 +154,19 @@ class CategoryConroller extends Controller
         return redirect('/dashboard')->with('status',trans('category.success_translet'));
 
     }
+    public function activeCategory(Request $req)
+    {
+        $cat=Category::find($req->cat_id);
+        $cat->status='0';
+        $cat->save();
+        return response()->json();
+    }
+    public function preventCategory(Request $req)
+    {
+        $cat=Category::find($req->cat_id);
+        $cat->status='1';
+        $cat->save();
+        return response()->json();
+    }
 
 }

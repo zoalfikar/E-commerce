@@ -396,7 +396,65 @@
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src={{asset('assets/js/material-dashboard.min.js?v=3.0.2')}}></script>
+  <script>
+    var availableTags = [ ];
+    $.ajax({
+        type: "GET",
+        url: "/search-products",
+        success: function (response)
+        {
+            startAoutoComplete(response);
+        }
+    });
+    function startAoutoComplete(availableTags)
+    {
+        $( "#search_product" ).autocomplete(
+        {
+            source: availableTags
+        });
+    }
 
+</script>
+<!--End JQUERY AUTO COMPLETE-->
+
+
+<script>
+$(document).ready(function ()
+    {
+        $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+        });
+
+
+        $('#lang').change(function (e)
+        {
+            e.preventDefault();
+            var lang =$('#lang').val();
+            $.ajax(
+            {
+                method: "POST",
+                url:"/chang-lang",
+                data:
+                {
+                    'lang':lang,
+                },
+                success:function(response){
+                    window.location.reload();
+
+                }
+            });
+
+        });
+
+
+
+
+    });
+
+
+</script>
 
 </body>
 
