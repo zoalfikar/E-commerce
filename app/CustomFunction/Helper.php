@@ -72,8 +72,8 @@ function trendingProduct($id)
 {
     //Dynamic method for calculating if a product is popular
 
-    $PurchasedPod = Order::select('user_id')->distinct('user_id')->whereNotNull('payment_id')->join('order_items','order_items.order_id','orders.id')->where('prod_id', $id)->count();
-    $PurchasedPods = OrderItem::select('prod_id')->distinct('prod_id')->join('orders','orders.id','order_items.order_id')->select('user_id')->whereNotNull('payment_mode')->count();
+    $PurchasedPod =DB::table('orders')->join('order_items','order_items.order_id','orders.id')->where('order_items.prod_id', $id)->whereNotNull('orders.payment_id')->select('orders.user_id')->distinct('orders.user_id')->count();
+    $PurchasedPods =DB::table('order_items')->join('orders','orders.id','order_items.order_id')->select('order_items.prod_id')->distinct('order_items.prod_id')->select('orders.user_id')->whereNotNull('orders.payment_id')->count();
     if($PurchasedPods==0){return 0;}
     return  $PurchasedPod/$PurchasedPods >= 0.15;
 }

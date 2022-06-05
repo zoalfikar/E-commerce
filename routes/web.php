@@ -8,6 +8,8 @@ use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\wishlistController;
 use App\Http\Controllers\Frontend\RateController;
 use App\Http\Controllers\Frontend\ReviewController;
+use Illuminate\Support\Facades\DB;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +21,15 @@ use App\Http\Controllers\Frontend\ReviewController;
 |
 */
 Route::get('/test',function () {
+//
 
-    return trendingProduct('11');
+
+return trendingProduct(12);
+
+
+
+
+
 });
 
 Route::middleware(['verified','lang'])->group( function () {
