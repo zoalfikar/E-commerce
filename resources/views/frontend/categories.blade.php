@@ -12,17 +12,17 @@
 
     @include('layouts/inct/frontendslider')
 
-    <div style="background-color: bisque">
+    <div style="background-color: bisque; height:50px">
         <a href="{{url('/showCategories')}}">collection</a>
      </div>
 
     <div class="py-5">
-        <div class="container">
+        <div class="container category_reload">
             <h1>All Categories</h1>
-            <div class="row">
+            <div class="row ">
                 @foreach ($categories as $categoy)
-                    <div class="col-md-3 mt-3">
-                        <div class="card">
+                    <div class="col-md-3 mt-3" >
+                        <div class="card category ">
                             <a href="{{url('/productsOfCateg/'.$categoy->slug)}}">
                                 <img  style="height: 320px; width:270px" src="{{asset('assets/uploads/category/'.$categoy->img)}}" alt="not found">
                                 <div class="card-body">
@@ -30,13 +30,15 @@
                                     <p class="float-start">{{$categoy->description}}</p>
                                 </div>
                             </a>
-                            @if (isAdmin())
-\                                @if ($categoy->status=='1')
-                                    <button id="activeBtn" class="btn btn-primary" value="{{$categoy->id}}">active</button>
-                                @else
-                                    <button id="preventBtn" class="btn btn-danger" value="{{$categoy->id}}">prevent</button>
+                            <div>
+                                @if (isAdmin())
+                                    @if ($categoy->status=='1')
+                                        <button  class="btn btn-primary activeBtn" value="{{$categoy->id}}">active</button>
+                                    @else
+                                        <button  class="btn btn-danger preventBtn" value="{{$categoy->id}}">prevent</button>
+                                    @endif
                                 @endif
-                            @endif
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -58,9 +60,9 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
                 });
-                $('#activeBtn').click(function (e) {
+                $('.activeBtn').click(function (e) {
                     e.preventDefault();
-                    var value=$(this).closest('.card').find('#activeBtn').val();
+                    var value=$(this).closest('.category').find('.activeBtn').val();
                     $.ajax(
                     {
                         method: "post",
@@ -71,15 +73,16 @@
                         },
                         success: function (response)
                         {
-                            $(".row").load(location.href+" .row");
+                            $(".category_reload").load(location.href+" .category_reload");
                         }
+
                     });
 
                 });
 
-                $('#preventBtn').click(function (e) {
+                $('.preventBtn').click(function (e) {
                     e.preventDefault();
-                    var value=$(this).closest('.card').find('#preventBtn').val();
+                    var value=$(this).closest('.category').find('.preventBtn').val();
                     $.ajax(
                     {
                         method: "post",
@@ -90,7 +93,7 @@
                         },
                         success: function (response)
                         {
-                            $(".row").load(location.href+" .row");
+                            $(".category_reload").load(location.href+" .category_reload");
                         }
                     });
 

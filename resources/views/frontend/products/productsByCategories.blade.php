@@ -10,16 +10,16 @@
 
 @section('content')
     @include('layouts/inct/frontendslider')
-    <div  style="background-color: bisque">
+    <div  style="background-color: bisque; height:50px ">
        <a href="{{url('/showCategories')}}">collection</a> / <a href="{{url('/productsOfCateg/'.$category->slug)}}">{{$category->name}}</a>
     </div>
 
     <div class="py-5">
-        <div class="container">
+        <div class="container reload">
             <h1>{{$category->name}}</h1>
             <div class="row">
                 @foreach ($products as $product)
-                    <div class="col-md-3 mt-3">
+                    <div class="col-md-3 mt-3 product_data">
                         <a href="{{url('/productDetails/'.$category->slug.'/'.$product->slug)}}">
                             <div class="card">
                                 <img  style="height: 320px; width:270px" src="{{asset('assets/uploads/product/'.$product->img)}}" alt="not found">
@@ -31,9 +31,9 @@
                         </a>
                       @if (isAdmin())
                             @if ($product->status=='1')
-                                <button id="activeBtn" class="btn btn-primary" value="{{$product->id}}">active</button>
+                                <button  class="btn btn-primary activeBtn" value="{{$product->id}}">active</button>
                             @else
-                                <button id="preventBtn" class="btn btn-danger" value="{{$product->id}}">prevent</button>
+                                <button  class="btn btn-danger preventBtn" value="{{$product->id}}">prevent</button>
                             @endif
                         @endif
                     </div>
@@ -56,42 +56,41 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
                 });
-                $('#activeBtn').click(function (e) {
+                $('.activeBtn').click(function (e) {
                     e.preventDefault();
-                    var value=$(this).closest('.card').find('#activeBtn').val();
+                    var value=$(this).closest('.product_data').find('.activeBtn').val();
                     $.ajax(
                     {
                         method: "post",
-                        url: "active-product",
+                        url: "/active-product",
                         data:
                         {
                             "prod_id":value,
                         },
                         success: function (response)
                         {
-                            $(".row").load(location.href+" .row");
+                            $(".reload").load(location.href+" .reload");
                         }
                     });
 
                 });
 
-                $('#preventBtn').click(function (e) {
+                $('.preventBtn').click(function (e) {
                     e.preventDefault();
-                    var value=$(this).closest('.card').find('#preventBtn').val();
+                    var value=$(this).closest('.product_data').find('.preventBtn').val();
                     $.ajax(
                     {
-                        method: "post",
-                        url: "prevent-product",
+                        method: "POST",
+                        url: "/prevent-product",
                         data:
                         {
                             "prod_id":value,
                         },
                         success: function (response)
                         {
-                            $(".row").load(location.href+" .row");
+                            $(".reload").load(location.href+" .reload");
                         }
                     });
-
                 });
             });
 

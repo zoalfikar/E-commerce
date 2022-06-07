@@ -188,19 +188,20 @@ class ProductController extends Controller
 
 
         }
-        public function activeCategory(Request $req)
+        public function activeProduct(Request $req)
         {
-            $cat=Product::find($req->prod_id);
-            $cat->status='0';
-            $cat->save();
+            $pro=Product::find($req->prod_id);
+            $pro->status='0';
+            $pro->save();
             return response()->json();
         }
-        public function preventCategory(Request $req)
+        public function preventProduct(Request $req)
         {
-            $cat=Product::find($req->prod_id);
-            $cat->status='1';
-            $cat->save();
+            $pro=Product::find($req->prod_id);
+            $pro->status='1';
+            $pro->save();
             return response()->json();
+
         }
 
 }

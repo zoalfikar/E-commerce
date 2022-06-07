@@ -70,9 +70,9 @@ class frontendController extends Controller
                 if (!$visitedCat) //check if user has visited this category befor,if yes ignore
                 {
                     $visiCategory= new CategoryVisit();
-                    $visiCategory->visited+=1;
                     $visiCategory->user_id=Auth::id();
-                    $visiCategory->cat_id=$category->cat_id;
+                    $visiCategory->cat_id=$category->id;
+                    $visiCategory->save();
                 }
                 if (pupularCategory($category->id))
                 {
@@ -89,9 +89,9 @@ class frontendController extends Controller
             if (!$visitedCat) //check if user has visited this category befor,if yes ignore
             {
                 $visiCategory= new CategoryVisit();
-                $visiCategory->visited+=1;
                 $visiCategory->user_id=Auth::id();
-                $visiCategory->cat_id=$category->cat_id;
+                $visiCategory->cat_id=$category->id;
+                $visiCategory->save();
             }
             if (pupularCategory($category->id))
             {

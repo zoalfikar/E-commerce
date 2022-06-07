@@ -66,13 +66,13 @@
 
 
 
-    <div style="background-color: bisque">
+    <div style="background-color: bisque; height:50px">
         <a href="{{url('/showCategories')}}">collection</a>/
         <a href="{{url('/productsOfCateg/'.$product->category->slug)}}">{{$product->category->name}}</a>/
         <a href="{{url('/productDetails/'.$product->category->slug.'/'.$product->slug)}}">{{$product->name}}</a>
      </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 reload">
         <div class="card product_data">
             <div class="card-header">
                 @if ($product->trending==1)
@@ -278,18 +278,18 @@
                     });
                     $('#activeBtn').click(function (e) {
                     e.preventDefault();
-                    var value=$(this).closest('.card').find('#activeBtn').val();
+                    var value=$(this).closest('.product_data').find('#activeBtn').val();
                     $.ajax(
                     {
                         method: "post",
-                        url: "active-product",
+                        url: "/active-product",
                         data:
                         {
                             "prod_id":value,
                         },
                         success: function (response)
                         {
-                            $(".row").load(location.href+" .row");
+                            $(".reload").load(location.href+" .reload");
                         }
                     });
 
@@ -297,21 +297,20 @@
 
                 $('#preventBtn').click(function (e) {
                     e.preventDefault();
-                    var value=$(this).closest('.card').find('#preventBtn').val();
+                    var value=$(this).closest('.product_data').find('#preventBtn').val();
                     $.ajax(
                     {
-                        method: "post",
-                        url: "prevent-product",
+                        method: "POST",
+                        url: "/prevent-product",
                         data:
                         {
                             "prod_id":value,
                         },
                         success: function (response)
                         {
-                            $(".row").load(location.href+" .row");
+                            $(".reload").load(location.href+" .reload");
                         }
                     });
-
                 });
 
             });

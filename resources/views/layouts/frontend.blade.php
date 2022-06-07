@@ -141,11 +141,11 @@
                     success: function (response)
                     {
                         startAoutoComplete(response);
+
                     }
                 });
                 function startAoutoComplete(availableTags)
                 {
-
                     $( "#search_product" ).autocomplete(
                     {
                         source: availableTags
