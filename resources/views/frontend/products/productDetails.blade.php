@@ -289,7 +289,7 @@
                         },
                         success: function (response)
                         {
-                            $(".reload").load(location.href+" .reload");
+                            window.location.reload();
                         }
                     });
 
@@ -308,7 +308,7 @@
                         },
                         success: function (response)
                         {
-                            $(".reload").load(location.href+" .reload");
+                            window.location.reload();
                         }
                     });
                 });

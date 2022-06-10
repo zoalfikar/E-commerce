@@ -69,7 +69,8 @@
                         },
                         success: function (response)
                         {
-                            $(".reload").load(location.href+" .reload");
+                            window.location.reload();
+                            //$(".reload").load(location.href+" .reload");
                         }
                     });
 
@@ -88,7 +89,8 @@
                         },
                         success: function (response)
                         {
-                            $(".reload").load(location.href+" .reload");
+                            window.location.reload();
+                            //$(".reload").load(location.href+" .reload");
                         }
                     });
                 });

@@ -73,7 +73,8 @@
                         },
                         success: function (response)
                         {
-                            $(".category_reload").load(location.href+" .category_reload");
+                            window.location.reload();
+                            //$(".category_reload").load(location.href+" .category_reload");
                         }
 
                     });
@@ -93,7 +94,8 @@
                         },
                         success: function (response)
                         {
-                            $(".category_reload").load(location.href+" .category_reload");
+                            window.location.reload();
+                            //$(".category_reload").load(location.href+" .category_reload");
                         }
                     });
 

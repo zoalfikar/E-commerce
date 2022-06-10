@@ -73,10 +73,10 @@
                     <div class="card-body">
                         <table class="table text-center">
                             <thead>
-                                <th>name</th>
-                                <th>prod_qty</th>
-                                <th>price</th>
-                                <th>picture</th>
+                                <th>اسم المنتج</th>
+                                <th>الكمية</th>
+                                <th>السعر</th>
+                                <th>صورة المنتج</th>
                             </thead>
                             <tbody>
                                 @foreach ($orders->OrderItems as $item )
@@ -91,7 +91,7 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <h4>Grand total :{{$orders->total_price}}$</h4>
+                        <h4>السعر الكلي :{{$orders->total_price}}$</h4>
                     </div>
 
                 </div>
