@@ -30,6 +30,8 @@ class CreateUsersTable extends Migration
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('pin_code')->nullable();
+            ///
+            $table->string('ipAdrees')->nullable();
         });
     }
 

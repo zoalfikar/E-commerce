@@ -20,6 +20,11 @@
                 <span class="badge badge-pill bg-success wishlist-items-count"></span>wishlist
             </a>
         </li>
+        <li class="nav-item ">
+            <a class="nav-link " href="{{url('/stores')}}">
+                <span class="badge badge-pill bg-success wishlist-items-count"></span>stores
+            </a>
+        </li>
     </ul>
     <div class="search-bar">
         <form action="{{url('/get-product')}}" method="POST">

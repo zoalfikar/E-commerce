@@ -92,7 +92,7 @@
             }
 
             .search-bar{
-                width:30%; margin-left:11cm;
+                width:20%; margin-left:11cm;
                 background-color:aliceblue;
                 padding-right:20px;
                 padding-left:20px;

@@ -8,6 +8,8 @@ use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\wishlistController;
 use App\Http\Controllers\Frontend\RateController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\StoresController;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -20,15 +22,13 @@ use Illuminate\Support\Facades\DB;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/test',function () {
+Route::get('/test',function ( ) {
 //
 
-
-return trendingProduct(12);
-
-
-
-
+// return asset('assets/uploads/product/1652808756.png');
+return request()->ip();
+// return asset('storesLogo/1653142189.jpg');
+// return 'any';
 
 });
 
@@ -79,6 +79,10 @@ Route::middleware(['auth','verified','lang'])->group(function()
     ////complaints
     Route::get('/add-complain/{id}',[frontendController::class,'complain']);
     Route::post('/complain',[frontendController::class,'sendComplain']);
+    ////stores
+    Route::get('/stores',[StoresController::class,'index']);
+    Route::get('/storeDetails',[StoresController::class,'storeDetails']);
+
 
 
 });
