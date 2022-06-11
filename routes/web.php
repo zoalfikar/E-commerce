@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\StoresController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
+use Stevebauman\Location\Facades\Location;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ Route::get('/test',function ( ) {
 //
 
 // return asset('assets/uploads/product/1652808756.png');
-return request()->ip();
+return Location::get("130.180.170.17");
 // return asset('storesLogo/1653142189.jpg');
 // return 'any';
 

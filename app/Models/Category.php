@@ -24,8 +24,14 @@ class Category extends Model
         'meta_title',
         'meta_descrip',
         'meta_kewwords',
-        'visited'
+        'store_id'
     ];
+
+    public function Store ( ) {
+
+        return $this->belongsTo(Store::class,'store_id','id');
+
+    }
 
     public function scopeArCat($query)
     {

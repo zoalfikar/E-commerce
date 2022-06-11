@@ -15,7 +15,17 @@ class CreateStoresTable extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->bigInteger('owner_id')->unsigned();
+            $table->string('ownerName')->nullable();;
+            $table->string('img')->nullable();
+            $table->string('country')->nullable();
+            $table->string('city')->nullable();
+            $table->double('address_latitude')->nullable();
+            $table->double('address_longitude')->nullable();
             $table->timestamps();
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+
         });
     }
 

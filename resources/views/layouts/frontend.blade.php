@@ -33,6 +33,18 @@
 
         <style>
 
+            /* google maps */
+            #map {
+                height: 30%;
+                width: 70%;
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+
             /* rating */
             .rating-css div {
                 color: #ffe400;
@@ -131,6 +143,8 @@
         <script src={{asset('frontend/js/bootstrap.bundle.min.js')}}></script>
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
 
+        <!--GOOGLE MAPS-->
+        <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdvQOKTlybWedG__3-07Iv_1OYFLn0yqU&callback=initMap">
         <!--JQUERY AUTO COMPLETE-->
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script>

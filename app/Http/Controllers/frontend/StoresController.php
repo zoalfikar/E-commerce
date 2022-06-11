@@ -16,9 +16,8 @@ class StoresController extends Controller
     }
     public function storeDetails(Request $req)
     {
-        // $ip ="178.171.171.126";
-        // $data = Location::get($ip);
-        // dd( $data);
-        // return view('frontend.stores.SFrontend.storeDetails');
+        $ip ="178.171.171.126";
+        $data = Location::get($ip);
+        return view('frontend.stores.SFrontend.storeDetails',compact('data'));
     }
 }
