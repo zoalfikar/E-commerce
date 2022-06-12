@@ -64,6 +64,11 @@
                 @csrf
             </form>
         </li>
+        @if (storeOwner())
+        <li class="nav-item">
+            <a class="nav-link " href="{{url('store-panel')}}">my store</a>
+        </li>
+        @endif
         @if (isAdmin())
         <a class="nav-link " href="{{url('/dashboard')}}">  Dashboard</a>
 

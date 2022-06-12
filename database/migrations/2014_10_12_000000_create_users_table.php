@@ -32,7 +32,6 @@ class CreateUsersTable extends Migration
             $table->string('pin_code')->nullable();
             ///
             $table->string('ipAdrees')->nullable();
-            $table->tinyInteger('store_owner')->nullable();
         });
     }
 

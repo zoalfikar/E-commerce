@@ -27,7 +27,7 @@ Route::get('/test',function ( ) {
 //
 
 // return asset('assets/uploads/product/1652808756.png');
-return Location::get("130.180.170.17");
+return storeOwner();
 // return asset('storesLogo/1653142189.jpg');
 // return 'any';
 
@@ -85,7 +85,7 @@ Route::middleware(['auth','verified','lang'])->group(function()
     Route::get('/new-store',[StoresController::class,'newStore']);
     Route::post('/create-store',[StoresController::class,'createStore']);
     Route::get('/storeDetails/{slug}',[StoresController::class,'storeDetails']);
-
+    Route::get('/store-panel',[StoresController::class,'showCP']);
 
 
 });

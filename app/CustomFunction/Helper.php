@@ -6,6 +6,7 @@ use App\Models\Language;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -107,8 +108,8 @@ function lng($ip)
 }
 function storeOwner()
 {
-    $user=User::where('id',Auth::id())->first();
-    if ($user->store_owner==1) {
+    $store=Store::where('owner_id',Auth::id())->first();
+    if ( $store) {
         return true;
     }
     return false;

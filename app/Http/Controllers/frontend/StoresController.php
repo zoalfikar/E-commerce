@@ -56,4 +56,9 @@ class StoresController extends Controller
         $store=Store::where('slug',$slug)->first();
         return view('frontend.stores.SFrontend.storeDetails',compact('store'));
     }
+    public function showCP()
+    {
+        return view('frontend.stores.SControlPanel.index');
+
+    }
 }
