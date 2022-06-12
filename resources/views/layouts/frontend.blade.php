@@ -144,7 +144,7 @@
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
 
         <!--GOOGLE MAPS-->
-        <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdvQOKTlybWedG__3-07Iv_1OYFLn0yqU&callback=initMap">
+        <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap"></script>
         <!--JQUERY AUTO COMPLETE-->
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script>

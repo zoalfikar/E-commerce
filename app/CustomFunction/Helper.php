@@ -6,11 +6,11 @@ use App\Models\Language;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-
-
+use Stevebauman\Location\Facades\Location;
 
 // languages
 function lang()
@@ -23,25 +23,35 @@ function changLang($lang)
     app()->setLocale($lang);
 }
 
-//store photo
+/////////////////////////////
 
-function CategoryPhoto($request)
+function CategoryPhoto($img)
 {
-    $file=$request->file('image');
+    $file=$img;
     $ext=$file->getClientOriginalExtension();
     $filename=time().'.'.$ext;
     $file->move(public_path('assets/uploads/category'), $filename);
     return $filename;
 }
-function productPhoto($request)
+function productPhoto($img)
 {
-    $file=$request->file('image');
+    $file=$img;
     $ext=$file->getClientOriginalExtension();
     $filename=time().'.'.$ext;
     $file->move(public_path('assets/uploads/products'), $filename);
     return $filename;
 }
+//store logo
+function storelogo($img)
+{
+    $file=$img;
+    $ext=$file->getClientOriginalExtension();
+    $filename=time().'.'.$ext;
+    $file->move(public_path('assets/uploads/stores'), $filename);
+    return $filename;
+}
 
+//////////////////////////////
 function selectLan()
 {
 
@@ -85,6 +95,25 @@ function pupularCategory($id)
     if($visitedcats==0){return 0;}
     return $visitedcat/$visitedcats >= 0.09;
 }
+function lat($ip)
+{
+    $data = Location::get($ip);
+    return $data->latitude;
+}
+function lng($ip)
+{
+    $data = Location::get($ip);
+    return $data->longitude;
+}
+function storeOwner()
+{
+    $user=User::where('id',Auth::id())->first();
+    if ($user->store_owner==1) {
+        return true;
+    }
+    return false;
+}
+
 
 
 

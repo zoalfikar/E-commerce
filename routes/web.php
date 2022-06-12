@@ -82,7 +82,9 @@ Route::middleware(['auth','verified','lang'])->group(function()
     Route::post('/complain',[frontendController::class,'sendComplain']);
     ////stores
     Route::get('/stores',[StoresController::class,'index']);
-    Route::get('/storeDetails',[StoresController::class,'storeDetails']);
+    Route::get('/new-store',[StoresController::class,'newStore']);
+    Route::post('/create-store',[StoresController::class,'createStore']);
+    Route::get('/storeDetails/{slug}',[StoresController::class,'storeDetails']);
 
 
 

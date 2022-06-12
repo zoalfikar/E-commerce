@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatCategory extends Migration
+class CreateStoreCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatCategory extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('store_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('languages_abbe')->nullable();
-            $table->string('translation_of')->nullable();
             $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->bigInteger('store_id')->unsigned()->nullable();
             $table->longText('description')->nullable();
             $table->tinyInteger('status')->default('0');
             $table->tinyInteger('populer')->default('0');
@@ -26,6 +24,7 @@ class CreatCategory extends Migration
             $table->string('meta_title')->nullable();
             $table->string('meta_descrip')->nullable();
             $table->string('meta_kewwords')->nullable();
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -37,6 +36,6 @@ class CreatCategory extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('store_categories');
     }
 }

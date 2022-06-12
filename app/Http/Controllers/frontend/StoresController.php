@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Store;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Stevebauman\Location\Facades\Location;
 
 // use Stevebauman\Location\Facades\Location;
@@ -12,12 +15,45 @@ class StoresController extends Controller
 {
      public function index()
     {
-        return view('frontend.stores.SFrontend.index');
+        $stores=Store::where('active','1')->get();
+        return view('frontend.stores.SFrontend.index',compact('stores'));
     }
-    public function storeDetails(Request $req)
+
+    public function newStore()
+
     {
-        $ip ="178.171.171.126";
-        $data = Location::get($ip);
-        return view('frontend.stores.SFrontend.storeDetails',compact('data'));
+        $user=User::where('id',Auth::id())->first();
+        return view('frontend.stores.SFrontend.new',compact('user'));
+    }
+
+    public function createStore(Request $request)
+    {
+        $store = new Store();
+        if( $request->hasFile('img'))
+            {
+                $store->img= storelogo($request->file('img'));
+            }
+        $store->name= $request->input('name');
+        $store->slug= $request->input('slug');
+        $store->owner_id= Auth::id();
+        $store->description= $request->input('description');
+        $store->ownerName= $request->input('ownerName');
+        $store->active=0;
+        $store->populer=0;
+        $store->country= $request->input('country');
+        $store->city= $request->input('city');
+        $store->address_latitude= $request->input('lat');
+        $store->address_longitude=$request->input('lng');
+        $store->save();
+        $user=User::where('id',Auth::id())->first();
+        $user->store_owner=1;
+        $user->update();
+        return redirect('/stores')->with('status','store create successfully');
+    }
+
+    public function storeDetails($slug)
+    {
+        $store=Store::where('slug',$slug)->first();
+        return view('frontend.stores.SFrontend.storeDetails',compact('store'));
     }
 }

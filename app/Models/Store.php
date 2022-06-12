@@ -9,10 +9,24 @@ class Store extends Model
 {
     use HasFactory;
 
-    public function Category ()
-    {
-        return $this->hasMany(Category::class);
-    }
+    protected $table ='stores';
+
+    protected $fillable =[
+        'name',
+        'slug',
+        'description',
+        'owner_id',
+        'ownerName',
+        'img',
+        'country',
+        'city',
+        'address_latitude',
+        'address_longitude',
+        'active',
+        'populer',
+    ];
+
+
 }
 
 
