@@ -11,7 +11,6 @@
 @section('content')
 
     @include('layouts/inct/frontendslider')
-
     <div class="py-5">
         <div class="container">
             <h1>Featured Products</h1>

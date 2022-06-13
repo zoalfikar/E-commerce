@@ -88,6 +88,7 @@ Route::middleware(['auth','verified','lang'])->group(function()
     Route::get('/store-panel',[StoresController::class,'showCP']);
 
 
+
 });
 
 
@@ -134,4 +135,8 @@ Route::group(['middleware' => ['auth','isAdmin','lang']], function () {
     Route::get('/edit-language/{id}', [App\Http\Controllers\admin\LanguagesController::class, 'editeLanguage']);
     Route::post('/update-language/{id}', [App\Http\Controllers\admin\LanguagesController::class, 'updateLanguage']);
     Route::get('/delet-language/{id}', [App\Http\Controllers\admin\LanguagesController::class, 'deletLanguage']);
+    //notifications
+    Route::post('/active-store', [App\Http\Controllers\admin\NotificationsController::class, 'activeStore']);
+    Route::post('/delet-store', [App\Http\Controllers\admin\NotificationsController::class, 'deletStore']);
+
 });

@@ -104,7 +104,7 @@
             }
 
             .search-bar{
-                width:20%; margin-left:11cm;
+                width:20%; margin-left:9cm;
                 background-color:aliceblue;
                 padding-right:20px;
                 padding-left:20px;
@@ -246,6 +246,46 @@
 
                     });
 
+
+                    $('.activeStore').click(function (e)
+                    {
+                        e.preventDefault();
+                        var slug=$(this).closest('.notifications').find('.activeStore').val();
+                        $.ajax(
+                        {
+                            method: "POST",
+                            url:"/active-store",
+                            data:
+                            {
+                                'slug':slug,
+                            },
+                            success:function(response){
+                                swal(response.status);
+                                window.location.reload();
+
+                            }
+                        });
+                    });
+
+                    $('.deletStore').click(function (e)
+                    {
+                        e.preventDefault();
+                        var slug=$(this).closest('.notifications').find('.deletStore').val();
+                        $.ajax(
+                        {
+                            method: "POST",
+                            url:"/delet-store",
+                            data:
+                            {
+                                'slug':slug,
+                            },
+                            success:function(response){
+                                swal(response.status);
+                                window.location.reload();
+
+                            }
+                        });
+                    });
 
 
 

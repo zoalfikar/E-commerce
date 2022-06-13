@@ -5,8 +5,10 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Store;
 use App\Models\User;
+use App\Notifications\StoreCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Stevebauman\Location\Facades\Location;
 
 // use Stevebauman\Location\Facades\Location;
@@ -45,9 +47,9 @@ class StoresController extends Controller
         $store->address_latitude= $request->input('lat');
         $store->address_longitude=$request->input('lng');
         $store->save();
-        $user=User::where('id',Auth::id())->first();
-        $user->store_owner=1;
-        $user->update();
+        //sent notification to admins
+        $users=User::where("role_as" , "1")->get();
+        Notification::send($users, new StoreCreated($store->slug,$store->ownerName));
         return redirect('/stores')->with('status','store create successfully');
     }
 

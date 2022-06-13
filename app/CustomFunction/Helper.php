@@ -99,12 +99,18 @@ function pupularCategory($id)
 function lat($ip)
 {
     $data = Location::get($ip);
-    return $data->latitude;
+    if ($data) {
+        return $data->latitude;
+    }
+    return "1";
 }
 function lng($ip)
 {
     $data = Location::get($ip);
-    return $data->longitude;
+    if ( $data ) {
+        return $data->longitude;
+    }
+    return "1";
 }
 function storeOwner()
 {
@@ -114,6 +120,15 @@ function storeOwner()
     }
     return false;
 }
+function isActiveStore($slug)
+{
+    $store=Store::where('slug',$slug)->first();
+    if ( $store) {
+        if($store->active==1){return 1 ;}
+    }
+    return false;
+}
+
 
 
 

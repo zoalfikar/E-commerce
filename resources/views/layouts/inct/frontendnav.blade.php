@@ -25,6 +25,33 @@
                 <span class="badge badge-pill bg-success wishlist-items-count"></span>stores
             </a>
         </li>
+    @auth
+        <li class="nav-item">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+                </button>
+                <ul class="dropdown-menu notifications" aria-labelledby="dropdownMenuButton1">
+                    @forelse (Auth::user()->notifications as $notification)
+                        @switch($notification->type)
+                            @case("App\Notifications\StoreCreated")
+                                <li><a class="dropdown-item float-start" href="{{url('/storeDetails/'.$notification->data['store_slug'])}}">{{$notification->data['owner_name']}} has created new store </a>
+                                    @if (!isActiveStore($notification->data['store_slug']))
+                                        <button class="btn btn-success float-end activeStore" value="{{$notification->data['store_slug']}}">active</button><button class="btn btn-primary float-end deletStore" value="{{$notification->data['store_slug']}}">delet</button></li>
+                                    @endif
+                                @break
+                            @case(2)
+                                @break
+                            @default
+                            <li><a class="dropdown-item" href="#">another notifications</a></li>
+                        @endswitch
+                    @empty
+                        <li><a class="dropdown-item" href="#">no notifications</a></li>
+                    @endforelse
+            </div>
+        </li>
+    @endauth
+
     </ul>
     <div class="search-bar">
         <form action="{{url('/get-product')}}" method="POST">
@@ -35,16 +62,19 @@
             </div>
         </form>
     </div>
-    <div class="dropdown" style="padding-left:55px;">
-        <select style="background-color:rgb(129, 131, 255)" class="form-select form-select-sm float-end " aria-label="Default select example" id="lang" >
-            @php $lang=selectLan(); @endphp
-            @foreach ($lang as $item)
-                <option {{$item->abbe==lang()?'selected':''}} value="{{$item->abbe}}"> {{$item->name}}</option>
-            @endforeach
-          </select>
-    </div>
+
     <ul class="navbar-nav ms-auto" >
         <div class="collapse navbar-collapse" id="navbarNav">
+            <li class="nav-item">
+                <div class="dropdown" style="padding-left:55px;">
+                    <select class="btn btn-secondary dropdown-toggle" style="background-color:rgb(129, 131, 255)" class="form-select form-select-sm float-end " aria-label="Default select example" id="lang" >
+                        @php $lang=selectLan(); @endphp
+                        @foreach ($lang as $item)
+                            <option {{$item->abbe==lang()?'selected':''}} value="{{$item->abbe}}"> {{$item->name}}</option>
+                        @endforeach
+                      </select>
+                </div>
+            </li>
         @guest
 
             <li class="nav-item">
@@ -83,4 +113,3 @@
         </ul>
     </div>
 </nav>
-
