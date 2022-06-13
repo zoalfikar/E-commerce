@@ -125,8 +125,9 @@ function isActiveStore($slug)
     $store=Store::where('slug',$slug)->first();
     if ( $store) {
         if($store->active==1){return 1 ;}
+        return false;
     }
-    return false;
+    return 2;
 }
 
 

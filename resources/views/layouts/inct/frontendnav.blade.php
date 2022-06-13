@@ -36,7 +36,7 @@
                         @switch($notification->type)
                             @case("App\Notifications\StoreCreated")
                                 <li><a class="dropdown-item float-start" href="{{url('/storeDetails/'.$notification->data['store_slug'])}}">{{$notification->data['owner_name']}} has created new store </a>
-                                    @if (!isActiveStore($notification->data['store_slug']))
+                                    @if (! isActiveStore($notification->data['store_slug'])==1|| !isActiveStore($notification->data['store_slug'])==2)
                                         <button class="btn btn-success float-end activeStore" value="{{$notification->data['store_slug']}}">active</button><button class="btn btn-primary float-end deletStore" value="{{$notification->data['store_slug']}}">delet</button></li>
                                     @endif
                                 @break
