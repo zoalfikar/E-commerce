@@ -14,7 +14,9 @@
 
     <div class="py-5">
         <div class="container">
-           <a href="{{url('/new-store')}}" class="btn btn-secondary btn-lg btn-block "><h6>create your store + </h6></a>
+            @if (!userHasStore())
+                <a href="{{url('/new-store')}}" class="btn btn-secondary btn-lg btn-block "><h6>create your store + </h6></a>
+            @endif
            <h1>All Stores</h1>
            <div class="row ">
                @foreach ($stores as $store)

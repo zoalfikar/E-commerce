@@ -24,14 +24,14 @@ class AdminMiddleware
           }
           else
           {
-              return redirect('/home')->with('statue','Access Denied!,you are not admin');
+              return redirect('/')->with('statue','Access Denied!,you are not admin');
 
           }
 
         }
         else
         {
-            return redirect('/home')->with('statue','login first');
+            return redirect('/')->with('statue','login first');
 
 
         }

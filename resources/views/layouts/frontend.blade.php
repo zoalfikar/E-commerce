@@ -104,7 +104,7 @@
             }
 
             .search-bar{
-                width:20%; margin-left:9cm;
+                width:20%; margin-left:7cm;
                 background-color:aliceblue;
                 padding-right:20px;
                 padding-left:20px;

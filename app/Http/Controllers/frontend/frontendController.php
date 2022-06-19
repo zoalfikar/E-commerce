@@ -11,6 +11,7 @@ use App\Models\CategoryVisit;
 use App\Models\Order;
 use App\Models\Rate;
 use App\Models\Review;
+use App\Models\Store;
 use App\Rules\messegeLength;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,11 +21,13 @@ class frontendController extends Controller
     {
         $products=Product::where('trending','1')->where('status','0')->take(15)->get();
         $categories=Category::where('populer','1')->where('status','0')->take(15)->get();
+        $stores=Store::where('populer','1')->where('active','1')->take(15)->get();
+
         if (lang()=='ar')
         {
             return view('arabic.frontend.index',compact('products','categories'));
         }
-        return view('frontend.index',compact('products','categories'));
+        return view('frontend.index',compact('products','categories','stores'));
     }
 
     public function showCategories()
@@ -66,6 +69,28 @@ class frontendController extends Controller
             {
                 $category=Category::where('slug',$slug)->ArCat()->first();
                 $products=Product::where('cat_id',$category->id)->get();
+                if (Auth::check())
+                {
+                    $visitedCat=CategoryVisit::where('cat_id',$category->id)->where('user_id',Auth::id())->exists();
+                    if (!$visitedCat) //check if user has visited this category befor,if yes ignore
+                    {
+                        $visiCategory= new CategoryVisit();
+                        $visiCategory->user_id=Auth::id();
+                        $visiCategory->cat_id=$category->id;
+                        $visiCategory->save();
+                    }
+                    if (pupularCategory($category->id))
+                    {
+                        $category->populer=1;
+                        $category->save();
+                    }
+                }
+                return view('arabic.frontend.products.productsByCategories',compact('category','products'));
+            }
+            $category=Category::where('slug',$slug)->first();
+            $products=Product::where('cat_id',$category->id)->get();
+            if (Auth::check())
+            {
                 $visitedCat=CategoryVisit::where('cat_id',$category->id)->where('user_id',Auth::id())->exists();
                 if (!$visitedCat) //check if user has visited this category befor,if yes ignore
                 {
@@ -79,24 +104,6 @@ class frontendController extends Controller
                     $category->populer=1;
                     $category->save();
                 }
-
-
-                return view('arabic.frontend.products.productsByCategories',compact('category','products'));
-            }
-            $category=Category::where('slug',$slug)->first();
-            $products=Product::where('cat_id',$category->id)->get();
-            $visitedCat=CategoryVisit::where('cat_id',$category->id)->where('user_id',Auth::id())->exists();
-            if (!$visitedCat) //check if user has visited this category befor,if yes ignore
-            {
-                $visiCategory= new CategoryVisit();
-                $visiCategory->user_id=Auth::id();
-                $visiCategory->cat_id=$category->id;
-                $visiCategory->save();
-            }
-            if (pupularCategory($category->id))
-            {
-                $category->populer=1;
-                $category->save();
             }
 
             return view('frontend.products.productsByCategories',compact('category','products'));

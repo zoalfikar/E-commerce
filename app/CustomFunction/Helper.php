@@ -67,16 +67,19 @@ function langDir()
 
 }
 function isAdmin()
-{
-    if(Auth::user()->role_as == '1')
+{  if(Auth::check())
     {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+        if(Auth::user()->role_as == '1')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
+    }
+    return false;
 }
 
 function trendingProduct($id)
@@ -130,7 +133,56 @@ function isActiveStore($slug)
     return 2;
 }
 
+/////   Store Products Filter
+function StoreproductsFilter($product)
+{
+    $cat_id=$product['cat_id'];
 
+    if (Category::where('id',$cat_id)->pluck('store_id')->first()== Store::where('owner_id',Auth::id())->pluck('id')->first())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function storeProducts($all_Products)
+{
+    foreach($all_Products as $object)
+    {
+        $arrays[] = $object->toArray();
+    }
+    $f_Products=array_filter($arrays, "StoreproductsFilter");
+    $Products=(object)$f_Products;
+    foreach ($f_Products as $key => $value)
+    {
+        $Product = new Product();
+        $Product->fill($value);
+        $Products->{$key} = $Product;
+    }
+    return $Products;
+}
+
+////////////// end of  Store Products Filter
+
+function userHasStore()
+{
+    if (Auth::check())
+    {
+        if (Store::where('owner_id',Auth::id())->exists())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return 1;
+
+}
 
 
 

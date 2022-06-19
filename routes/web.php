@@ -33,7 +33,7 @@ return storeOwner();
 
 });
 
-Route::middleware(['verified','lang'])->group( function () {
+Route::middleware(['guest','lang'])->group( function () {
 
     //routes for products and categories
     Route::get('/',[frontendController::class,'index']);
@@ -41,6 +41,9 @@ Route::middleware(['verified','lang'])->group( function () {
     Route::get('/show-all-categories',[frontendController::class,'showAllCategories']);
     Route::get('/productsOfCateg/{slug}',[frontendController::class,'productsOfCateg']);
     Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'productDetails']);
+    //stores route
+    Route::get('/stores',[StoresController::class,'index']);
+    Route::get('/storeDetails/{slug}',[StoresController::class,'storeDetails']);
     //for search
     Route::get('/search-products',[frontendController::class,'searchForProducts']);
     Route::post('/get-product',[frontendController::class,'getProduct']);
@@ -81,13 +84,17 @@ Route::middleware(['auth','verified','lang'])->group(function()
     Route::get('/add-complain/{id}',[frontendController::class,'complain']);
     Route::post('/complain',[frontendController::class,'sendComplain']);
     ////stores
-    Route::get('/stores',[StoresController::class,'index']);
     Route::get('/new-store',[StoresController::class,'newStore']);
     Route::post('/create-store',[StoresController::class,'createStore']);
-    Route::get('/storeDetails/{slug}',[StoresController::class,'storeDetails']);
     Route::get('/store-panel',[StoresController::class,'showCP']);
-
-
+    Route::get('/store-categores',[StoresController::class,'CategoriesIndex']);
+    Route::get('/store-add-category',[StoresController::class,'addCategory']);
+    Route::post('/store-insert-category',[StoresController::class,'insertCategory']);
+    Route::get('/store-edit-category/{id}',[StoresController::class,'editCategory']);
+    Route::get('/store-products',[StoresController::class,'ProductsIndex']);
+    Route::get('/store-add-product',[StoresController::class,'addProduct']);
+    Route::post('/store-insert-product',[StoresController::class,'insertProduct']);
+    Route::get('/store-edit-product/{id}',[StoresController::class,'editProduct']);
 
 });
 
@@ -138,5 +145,4 @@ Route::group(['middleware' => ['auth','isAdmin','lang']], function () {
     //notifications
     Route::post('/active-store', [App\Http\Controllers\admin\NotificationsController::class, 'activeStore']);
     Route::post('/delet-store', [App\Http\Controllers\admin\NotificationsController::class, 'deletStore']);
-
 });

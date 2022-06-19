@@ -24,6 +24,7 @@ class Category extends Model
         'meta_title',
         'meta_descrip',
         'meta_kewwords',
+        'store_id',
     ];
 
 

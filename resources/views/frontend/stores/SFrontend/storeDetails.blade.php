@@ -2,7 +2,7 @@
 
 @section('title')
 
-    stores
+    {{$store->name}}
 
 @endsection
 
@@ -19,8 +19,9 @@
         <p>{{$store->description}}</p>
     </div>
     <div class="py-5">
-        <div class="container">
-            <h1>categorys</h1>
+        <div class="container mt-10">
+            @yield('store-content')
+
         </div>
     </div>
 

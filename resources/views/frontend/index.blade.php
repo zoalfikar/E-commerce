@@ -35,11 +35,9 @@
         </div>
     </div>
 
-
-
     <div class="py-5">
         <div class="container">
-            <h1>Trendin Categories</h1>
+            <h1>Popular Categories</h1>
             <div class="row">
                 <div class="owl-carousel my-carousel owl-theme">
                     @foreach ($categories as $category)
@@ -59,6 +57,33 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="py-5">
+        <div class="container">
+            <h1>Popular Stores</h1>
+            <div class="row">
+                <div class="owl-carousel my-carousel owl-theme">
+                    @foreach ($stores as $store)
+                        <div class="item">
+                            <div class="card">
+                                <a href="{{url('/storeDetails/'.$store->slug)}}">
+                                    <img  style="height: 320px; width:270px" src="{{asset('assets/uploads/stores/'.$store->img)}}" alt="not found">
+                                    <div class="card-body">
+                                        <h4>{{$store->name}}</h4>
+                                        <p class="float-start">{{$store->description}}</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 @endsection
 

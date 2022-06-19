@@ -26,6 +26,16 @@ class Store extends Model
         'populer',
     ];
 
+    public function owner( )
+    {
+       return $this->belongsTo(User::class,'owner_id','id');
+    }
+
+    public function categories( )
+    {
+       return $this->hasMany(Category::class,'store_id','id');
+    }
+
 
 }
 
