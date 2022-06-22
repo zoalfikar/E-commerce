@@ -44,6 +44,7 @@ Route::middleware(['guest','lang'])->group( function () {
     //stores route
     Route::get('/stores',[StoresController::class,'index']);
     Route::get('/storeDetails/{slug}',[StoresController::class,'storeDetails']);
+    Route::get('/store-productsOfCateg/{Sslug}/{Cslug}',[StoresController::class,'storeCategoryProducts']);
     //for search
     Route::get('/search-products',[frontendController::class,'searchForProducts']);
     Route::post('/get-product',[frontendController::class,'getProduct']);

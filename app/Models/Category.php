@@ -26,7 +26,11 @@ class Category extends Model
         'meta_kewwords',
         'store_id',
     ];
+    public function Products()
+    {
+        return $this->hasMany(Product::class,'cat_id');
 
+    }
 
     public function scopeArCat($query)
     {

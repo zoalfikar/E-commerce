@@ -7,7 +7,7 @@
             @foreach ($store->categories as $categoy)
                 <div class="col-md-4 mt-3" >
                     <div class="card category ">
-                        <a href="{{url('/productsOfCateg/'.$categoy->slug)}}">
+                        <a href="{{url('/store-productsOfCateg/'.$store->slug.'/'.$categoy->slug)}}">
                             <img  style="height: 320px; width:270px" src="{{asset('assets/uploads/category/'.$categoy->img)}}" alt="not found">
                             <div class="card-body">
                                 <h4>{{$categoy->name}}</h4>

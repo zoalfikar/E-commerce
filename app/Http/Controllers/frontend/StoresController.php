@@ -60,6 +60,13 @@ class StoresController extends Controller
         $store=Store::where('slug',$slug)->first();
         return view('frontend.stores.SFrontend.components.categories',compact('store'));
     }
+    public function storeCategoryProducts($Sslug,$Cslug)
+    {
+
+        $category=Category::where('slug',$Cslug)->first();
+        $store=Store::where('slug',$Sslug)->first();
+        return view('frontend.stores.SFrontend.components.products',compact('store','category'));
+    }
     public function showCP()
     {
         return view('frontend.stores.SControlPanel.index');
