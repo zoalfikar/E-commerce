@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\frontend;
 
+use App\Events\NewProduct;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
@@ -204,6 +205,7 @@ class StoresController extends Controller
          $product->meta_descrip= $request->input('meta_descrip');
          $product->meta_kewwords= $request->input('meta_kewwords');
          $product->save();
+         event(new NewProduct($category->store->name,$product->name,$product->small_description,$product->description,$product->orginal_price,$product->selling_price,$product->img));
          return redirect('/store-products')->with('status',trans('product.success_add'));
 
     }

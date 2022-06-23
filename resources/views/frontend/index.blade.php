@@ -5,11 +5,7 @@
     welcom page
 
 @endsection
-
-
-
 @section('content')
-
     @include('layouts/inct/frontendslider')
     <div class="py-5">
         <div class="container">
@@ -83,7 +79,13 @@
         </div>
     </div>
 
+    <div class="containar">
+        <div class="posts">
 
+
+
+        </div>
+    </div>
 
 @endsection
 
@@ -114,4 +116,16 @@
 
     </script>
 
+    <script>
+        $(function(){
+            let ip_adress = '127.0.0.1';
+            let socket_port = '3000';
+            let socket = io(ip_adress+ ':'+ socket_port);
+
+            socket.on('sendToClinet',(message)=>
+            {
+                $('.posts').append(" <div class=\"card-body \"><h3 class=\"card-title\">"+message.data.name+"</h3><h6 class=\"card-subtitle\">"+message.data.storName+small_description"</h6><div class=\"row\"><div class=\"col-lg-5 col-md-6 col-sm-6\"><div class=\"white-box text-center\"><img src=\"{{asset('assets/uploads/product/"+message.data.img+")</div></div></div>");
+            });
+        });
+    </script>
 @endsection
