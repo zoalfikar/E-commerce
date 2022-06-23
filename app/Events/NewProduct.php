@@ -30,6 +30,7 @@ class NewProduct implements ShouldBroadcastNow
      */
     public function __construct($storName,$name,$small_description, $description,$orginal_price,$selling_price,$img)
     {
+
     $this->storName=$storName;
     $this->name=$name;
     $this->small_description=$small_description;
