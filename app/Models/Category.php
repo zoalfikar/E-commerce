@@ -25,6 +25,7 @@ class Category extends Model
         'meta_descrip',
         'meta_kewwords',
         'store_id',
+        'sub_cat_of',
     ];
     public function Products()
     {

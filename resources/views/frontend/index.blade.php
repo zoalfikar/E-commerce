@@ -124,7 +124,10 @@
 
             socket.on('sendToClinet',(message)=>
             {
-                $('.posts').append(" <div class=\"card-body \"><h3 class=\"card-title\">"+message.data.name+"</h3><h6 class=\"card-subtitle\">"+message.data.storName+small_description"</h6><div class=\"row\"><div class=\"col-lg-5 col-md-6 col-sm-6\"><div class=\"white-box text-center\"><img src=\"{{asset('assets/uploads/product/"+message.data.img+")</div></div></div>");
+                $('.posts').append(" <div class=\"container\"><h1>"+message.data.name+"</h1>"
+                    +"<h1>"+message.data.storName+"</h1>"
+                    +"</div>"
+                );
             });
         });
     </script>

@@ -183,6 +183,96 @@ function userHasStore()
     return 1;
 
 }
+//////////////////////////////////////////
+
+function mainCategory($Cat_id)
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category->sub_cat_of==null)
+    {
+        return $Category;
+    }
+    else
+    {
+        return mainCategory($Category->sub_cat_of);
+    }
+
+}
+
+function orginalCategory($Cat_id)
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category->translation_of==null)
+    {
+        return $Category;
+    }
+    else
+    {
+        return mainCategory($Category->translation_of);
+    }
+}
+//////  transVersion()
+
+function preTransVersion($abbe , $Cat_id )
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category)
+    {
+        if ($Category->languages_abbe==$abbe)
+        {
+            return $Category;
+        }
+        else
+        {
+            return pretransVersion($abbe,$Category->translation_of);
+        }
+    }
+    return false;
+
+}
+
+function postTransVersion($abbe , $Cat_id )
+{
+    $Category=Category::where('translation_of',$Cat_id)->first();
+    if ($Category)
+    {
+        if ($Category->languages_abbe==$abbe)
+        {
+            return $Category;
+        }
+        else
+        {
+            return postTransVersion($abbe,$Category->id);
+        }
+    }
+
+    return false;
+}
+
+function transVersion($abbe , $Cat_id )
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category)
+    {
+        $cat =  preTransVersion($abbe , $Cat_id );
+        if ($cat)
+        {
+                return $cat;
+        }
+        else
+        {
+            $cat=postTransVersion($abbe , $Cat_id );
+            if ($cat)
+            {
+                return $cat;
+            }
+        }
+    }
+    return false ;
+}
+
+//////  end of transVersion()
+
 
 
 

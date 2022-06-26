@@ -27,10 +27,10 @@ use Stevebauman\Location\Facades\Location;
 */
 Route::get('/test',function ( ) {
 //
-event(new NewProduct("ssdsds","dcsdcdc","cdcsdcdscd","fgfgfg","sxsxsx","sxxsxs","sxsxsx"));
+// event(new NewProduct("ssdsds","dcsdcdc","cdcsdcdscd","fgfgfg","sxsxsx","sxxsxs","sxsxsx"));
 
 // return asset('assets/uploads/product/1652808756.png');
-return "done";
+return transVersion('en' , 33 );
 // return asset('storesLogo/1653142189.jpg');
 // return 'any';
 
