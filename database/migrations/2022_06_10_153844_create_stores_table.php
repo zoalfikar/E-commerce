@@ -27,6 +27,8 @@ class CreateStoresTable extends Migration
             $table->double('address_longitude')->nullable();
             $table->tinyInteger('active')->nullable();
             $table->tinyInteger('populer')->nullable();
+            $table->string('pay_pal_key');
+            $table->string('razpory_key');
             $table->timestamps();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 

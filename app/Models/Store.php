@@ -24,6 +24,8 @@ class Store extends Model
         'address_longitude',
         'active',
         'populer',
+        'pay_pal_key',
+        'razpory_key',
     ];
 
     public function owner( )
