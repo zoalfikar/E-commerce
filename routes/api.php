@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApiAuthController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\payment\MyFatoorahController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,10 @@ Route::post('logout', [ApiAuthController::class,'logout']);
 
 Route::get('/l', function (){
     return [
-        "hello"=> "i star use qpi"
+        "hello"=> "i starte using api"
     ];
 
 });
+
+Route::post('/payWith-MyFatoora',[MyFatoorahController::class,'payOrder'] );
+

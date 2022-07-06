@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\wishlistController;
 use App\Http\Controllers\Frontend\RateController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\StoresController;
+use App\Http\Controllers\payment\MyFatoorahController;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 use Stevebauman\Location\Facades\Location;
@@ -99,6 +100,13 @@ Route::middleware(['auth','verified','lang'])->group(function()
     Route::get('/store-add-product',[StoresController::class,'addProduct']);
     Route::post('/store-insert-product',[StoresController::class,'insertProduct']);
     Route::get('/store-edit-product/{id}',[StoresController::class,'editProduct']);
+    //myfatoora
+    Route::post('/payWith-MyFatoora',[MyFatoorahController::class,'payOrder'] );
+    Route::get('/callback', [MyFatoorahController::class,'paymentCallback']);
+    Route::get('/error',function ( )
+    {
+        return "errore";
+    });
 
 });
 
