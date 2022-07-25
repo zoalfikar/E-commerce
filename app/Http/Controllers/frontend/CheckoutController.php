@@ -130,8 +130,5 @@ class CheckoutController extends Controller
             'pincod'=>$pincod,
             'total_price'=>$total_price
         ]);
-
-
-
     }
 }

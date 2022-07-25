@@ -417,7 +417,12 @@
 </script>
 <!--End JQUERY AUTO COMPLETE-->
 
-
+<script>
+    function clearImgInput() {
+        document.getElementById("myInputFileID").value=null;
+    }
+    document.getElementById("myInputFileID").value=null;
+</script>
 <script>
 $(document).ready(function ()
     {

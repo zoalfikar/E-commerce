@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Models\Category;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,11 @@ class Kernel extends ConsoleKernel
         $schedule->call(function ()
         {
             DB::table('category_visits')->truncate();
+            $categories=Category::all();
+            foreach ( $categories as $category ) {
+                $category->popular=0;
+                $category->update();
+            }
         })->monthly();
     }
 

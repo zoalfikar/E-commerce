@@ -74,13 +74,14 @@
                         <textarea name="meta_descrip"  class="form-control"  style="resize: none;"></textarea>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <input type="file"  name="image" class="form-control-file">
+                        <input id="myInputFileID" type="file"  name="image" class="form-control-file">
                     </div>
                     <input type="submit"  value="add" class="btn btn-primry">
 
                 </div>
 
             </form>
+            <button class="btn btn-danger"  onclick="clearImgInput()">delet image</button>
         </div>
 </div>
 @endsection

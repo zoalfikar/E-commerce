@@ -24,12 +24,24 @@ class Category extends Model
         'meta_title',
         'meta_descrip',
         'meta_kewwords',
-        'visited'
+        'store_id',
+        'sub_cat_of',
     ];
+    public function Products()
+    {
+        return $this->hasMany(Product::class,'cat_id');
+
+    }
+    public function store( )
+    {
+       return $this->belongsTo(Store::class,'store_id','id');
+    }
+
 
     public function scopeArCat($query)
     {
         return $query->where('languages_abbe','ar');
     }
+
 
 }

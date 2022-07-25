@@ -1,4 +1,6 @@
 <?php
+
+use App\Events\NewProduct;
 use App\Http\Controllers\frontend\frontendController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -8,7 +10,11 @@ use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\wishlistController;
 use App\Http\Controllers\Frontend\RateController;
 use App\Http\Controllers\Frontend\ReviewController;
+use App\Http\Controllers\Frontend\StoresController;
+use App\Http\Controllers\payment\MyFatoorahController;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
+use Stevebauman\Location\Facades\Location;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,19 +26,18 @@ use Illuminate\Support\Facades\DB;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/test',function () {
+Route::get('/test',function ( ) {
 //
+// event(new NewProduct("ssdsds","dcsdcdc","cdcsdcdscd","fgfgfg","sxsxsx","sxxsxs","sxsxsx"));
 
-
-return trendingProduct(12);
-
-
-
-
+// return asset('assets/uploads/product/1652808756.png');
+return transVersion('en' , 33 );
+// return asset('storesLogo/1653142189.jpg');
+// return 'any';
 
 });
 
-Route::middleware(['verified','lang'])->group( function () {
+Route::middleware(['guest','lang'])->group( function () {
 
     //routes for products and categories
     Route::get('/',[frontendController::class,'index']);
@@ -40,6 +45,10 @@ Route::middleware(['verified','lang'])->group( function () {
     Route::get('/show-all-categories',[frontendController::class,'showAllCategories']);
     Route::get('/productsOfCateg/{slug}',[frontendController::class,'productsOfCateg']);
     Route::get('/productDetails/{cat_slug}/{prod_slug}',[frontendController::class,'productDetails']);
+    //stores route
+    Route::get('/stores',[StoresController::class,'index']);
+    Route::get('/storeDetails/{slug}',[StoresController::class,'storeDetails']);
+    Route::get('/store-productsOfCateg/{Sslug}/{Cslug}',[StoresController::class,'storeCategoryProducts']);
     //for search
     Route::get('/search-products',[frontendController::class,'searchForProducts']);
     Route::post('/get-product',[frontendController::class,'getProduct']);
@@ -79,7 +88,25 @@ Route::middleware(['auth','verified','lang'])->group(function()
     ////complaints
     Route::get('/add-complain/{id}',[frontendController::class,'complain']);
     Route::post('/complain',[frontendController::class,'sendComplain']);
-
+    ////stores
+    Route::get('/new-store',[StoresController::class,'newStore']);
+    Route::post('/create-store',[StoresController::class,'createStore']);
+    Route::get('/store-panel',[StoresController::class,'showCP']);
+    Route::get('/store-categores',[StoresController::class,'CategoriesIndex']);
+    Route::get('/store-add-category',[StoresController::class,'addCategory']);
+    Route::post('/store-insert-category',[StoresController::class,'insertCategory']);
+    Route::get('/store-edit-category/{id}',[StoresController::class,'editCategory']);
+    Route::get('/store-products',[StoresController::class,'ProductsIndex']);
+    Route::get('/store-add-product',[StoresController::class,'addProduct']);
+    Route::post('/store-insert-product',[StoresController::class,'insertProduct']);
+    Route::get('/store-edit-product/{id}',[StoresController::class,'editProduct']);
+    //myfatoora
+    Route::post('/payWith-MyFatoora',[MyFatoorahController::class,'payOrder'] );
+    Route::get('/callback', [MyFatoorahController::class,'paymentCallback']);
+    Route::get('/error',function ( )
+    {
+        return "errore";
+    });
 
 });
 
@@ -127,4 +154,7 @@ Route::group(['middleware' => ['auth','isAdmin','lang']], function () {
     Route::get('/edit-language/{id}', [App\Http\Controllers\admin\LanguagesController::class, 'editeLanguage']);
     Route::post('/update-language/{id}', [App\Http\Controllers\admin\LanguagesController::class, 'updateLanguage']);
     Route::get('/delet-language/{id}', [App\Http\Controllers\admin\LanguagesController::class, 'deletLanguage']);
+    //notifications
+    Route::post('/active-store', [App\Http\Controllers\admin\NotificationsController::class, 'activeStore']);
+    Route::post('/delet-store', [App\Http\Controllers\admin\NotificationsController::class, 'deletStore']);
 });

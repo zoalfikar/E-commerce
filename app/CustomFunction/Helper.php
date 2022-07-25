@@ -6,11 +6,12 @@ use App\Models\Language;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\Store;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
-
-
+use Stevebauman\Location\Facades\Location;
 
 // languages
 function lang()
@@ -23,25 +24,35 @@ function changLang($lang)
     app()->setLocale($lang);
 }
 
-//store photo
+/////////////////////////////
 
-function CategoryPhoto($request)
+function CategoryPhoto($img)
 {
-    $file=$request->file('image');
+    $file=$img;
     $ext=$file->getClientOriginalExtension();
     $filename=time().'.'.$ext;
     $file->move(public_path('assets/uploads/category'), $filename);
     return $filename;
 }
-function productPhoto($request)
+function productPhoto($img)
 {
-    $file=$request->file('image');
+    $file=$img;
     $ext=$file->getClientOriginalExtension();
     $filename=time().'.'.$ext;
     $file->move(public_path('assets/uploads/products'), $filename);
     return $filename;
 }
+//store logo
+function storelogo($img)
+{
+    $file=$img;
+    $ext=$file->getClientOriginalExtension();
+    $filename=time().'.'.$ext;
+    $file->move(public_path('assets/uploads/stores'), $filename);
+    return $filename;
+}
 
+//////////////////////////////
 function selectLan()
 {
 
@@ -56,16 +67,19 @@ function langDir()
 
 }
 function isAdmin()
-{
-    if(Auth::user()->role_as == '1')
+{  if(Auth::check())
     {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+        if(Auth::user()->role_as == '1')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 
+    }
+    return false;
 }
 
 function trendingProduct($id)
@@ -85,6 +99,180 @@ function pupularCategory($id)
     if($visitedcats==0){return 0;}
     return $visitedcat/$visitedcats >= 0.09;
 }
+function lat($ip)
+{
+    $data = Location::get($ip);
+    if ($data) {
+        return $data->latitude;
+    }
+    return "1";
+}
+function lng($ip)
+{
+    $data = Location::get($ip);
+    if ( $data ) {
+        return $data->longitude;
+    }
+    return "1";
+}
+function storeOwner()
+{
+    $store=Store::where('owner_id',Auth::id())->first();
+    if ( $store) {
+        return true;
+    }
+    return false;
+}
+function isActiveStore($slug)
+{
+    $store=Store::where('slug',$slug)->first();
+    if ( $store) {
+        if($store->active==1){return 1 ;}
+        return false;
+    }
+    return 2;
+}
+
+/////   Store Products Filter
+function StoreproductsFilter($product)
+{
+    $cat_id=$product['cat_id'];
+
+    if (Category::where('id',$cat_id)->pluck('store_id')->first()== Store::where('owner_id',Auth::id())->pluck('id')->first())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+function storeProducts($all_Products)
+{
+    foreach($all_Products as $object)
+    {
+        $arrays[] = $object->toArray();
+    }
+    $f_Products=array_filter($arrays, "StoreproductsFilter");
+    $Products=(object)$f_Products;
+    foreach ($f_Products as $key => $value)
+    {
+        $Product = new Product();
+        $Product->fill($value);
+        $Products->{$key} = $Product;
+    }
+    return $Products;
+}
+
+////////////// end of  Store Products Filter
+
+function userHasStore()
+{
+    if (Auth::check())
+    {
+        if (Store::where('owner_id',Auth::id())->exists())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    return 1;
+
+}
+//////////////////////////////////////////
+
+function mainCategory($Cat_id)
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category->sub_cat_of==null)
+    {
+        return $Category;
+    }
+    else
+    {
+        return mainCategory($Category->sub_cat_of);
+    }
+
+}
+
+function orginalCategory($Cat_id)
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category->translation_of==null)
+    {
+        return $Category;
+    }
+    else
+    {
+        return mainCategory($Category->translation_of);
+    }
+}
+//////  transVersion()
+
+function preTransVersion($abbe , $Cat_id )
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category)
+    {
+        if ($Category->languages_abbe==$abbe)
+        {
+            return $Category;
+        }
+        else
+        {
+            return pretransVersion($abbe,$Category->translation_of);
+        }
+    }
+    return false;
+
+}
+
+function postTransVersion($abbe , $Cat_id )
+{
+    $Category=Category::where('translation_of',$Cat_id)->first();
+    if ($Category)
+    {
+        if ($Category->languages_abbe==$abbe)
+        {
+            return $Category;
+        }
+        else
+        {
+            return postTransVersion($abbe,$Category->id);
+        }
+    }
+
+    return false;
+}
+
+function transVersion($abbe , $Cat_id )
+{
+    $Category=Category::where('id',$Cat_id)->first();
+    if ($Category)
+    {
+        $cat =  preTransVersion($abbe , $Cat_id );
+        if ($cat)
+        {
+                return $cat;
+        }
+        else
+        {
+            $cat=postTransVersion($abbe , $Cat_id );
+            if ($cat)
+            {
+                return $cat;
+            }
+        }
+    }
+    return false ;
+}
+
+//////  end of transVersion()
+
 
 
 

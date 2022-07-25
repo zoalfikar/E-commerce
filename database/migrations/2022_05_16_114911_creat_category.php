@@ -27,6 +27,11 @@ class CreatCategory extends Migration
             $table->string('meta_descrip')->nullable();
             $table->string('meta_kewwords')->nullable();
             $table->timestamps();
+            //add some changes
+            $table->bigInteger('store_id')->unsigned()->nullable();
+            $table->bigInteger('sub_cat_of')->unsigned()->nullable();
+            $table->foreign('store_id')->references('id')->on('stores')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('sub_cat_of')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -33,6 +33,18 @@
 
         <style>
 
+            /* google maps */
+            #map {
+                height: 30%;
+                width: 70%;
+            }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+
             /* rating */
             .rating-css div {
                 color: #ffe400;
@@ -92,7 +104,7 @@
             }
 
             .search-bar{
-                width:30%; margin-left:11cm;
+                width:20%; margin-left:7cm;
                 background-color:aliceblue;
                 padding-right:20px;
                 padding-left:20px;
@@ -131,6 +143,11 @@
         <script src={{asset('frontend/js/bootstrap.bundle.min.js')}}></script>
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
 
+        <!--broadcasting  -socket.io-  -->
+        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
+
+        <!--GOOGLE MAPS-->
+        <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap"></script>
         <!--JQUERY AUTO COMPLETE-->
         <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
         <script>
@@ -232,6 +249,46 @@
 
                     });
 
+
+                    $('.activeStore').click(function (e)
+                    {
+                        e.preventDefault();
+                        var slug=$(this).closest('.notifications').find('.activeStore').val();
+                        $.ajax(
+                        {
+                            method: "POST",
+                            url:"/active-store",
+                            data:
+                            {
+                                'slug':slug,
+                            },
+                            success:function(response){
+                                swal(response.status);
+                                window.location.reload();
+
+                            }
+                        });
+                    });
+
+                    $('.deletStore').click(function (e)
+                    {
+                        e.preventDefault();
+                        var slug=$(this).closest('.notifications').find('.deletStore').val();
+                        $.ajax(
+                        {
+                            method: "POST",
+                            url:"/delet-store",
+                            data:
+                            {
+                                'slug':slug,
+                            },
+                            success:function(response){
+                                swal(response.status);
+                                window.location.reload();
+
+                            }
+                        });
+                    });
 
 
 
