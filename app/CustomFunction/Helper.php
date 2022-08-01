@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Stevebauman\Location\Facades\Location;
 
+use function PHPUnit\Framework\isNull;
+
 // languages
 function lang()
 {
@@ -63,6 +65,9 @@ function selectLan()
 function langDir()
 {
     $lang=Language::Active()->where('abbe',lang())->first();
+    if(isNull( $lang)){
+        return 'en' ;
+    }
     return $lang->direction;
 
 }
