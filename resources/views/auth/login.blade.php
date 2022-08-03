@@ -3,6 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+    <div id="active-users">active users on website : {{$activeUsers}}</div>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
@@ -70,4 +71,24 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+
+
+$(function(){
+            let ip_adress = '127.0.0.1';
+            let socket_port = '3000';
+            let socket = io(ip_adress+ ':'+ socket_port);
+
+            socket.on('sendToClinet1',(message)=>
+            {
+                $("#active-users").html("active users on website :"+message.data.active_user);
+
+            });
+        });
+
+
+
+</script>
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\NewProduct;
+use App\Events\UserLoginLogout;
 use App\Http\Controllers\frontend\frontendController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +14,9 @@ use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\StoresController;
 use App\Http\Controllers\payment\MyFatoorahController;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Stevebauman\Location\Facades\Location;
 
 /*
@@ -29,12 +32,21 @@ use Stevebauman\Location\Facades\Location;
 Route::get('/test',function ( ) {
 //
 // event(new NewProduct("ssdsds","dcsdcdc","cdcsdcdscd","fgfgfg","sxsxsx","sxxsxs","sxsxsx"));
+event( new UserLoginLogout());
+// if (Cache::has('active_users')) {
+//     // Cache::increment('active_users');
+//     Cache::decrement('active_users');
+// }
+// else {
+// Cache::put('active_users', 1);
+// }
 
-// return asset('assets/uploads/product/1652808756.png');
-return transVersion('en' , 33 );
+//  $value = Cache::get('active_users');
+// // return asset('assets/uploads/product/1652808756.png');
+// dd($value);
+return "redis done";
 // return asset('storesLogo/1653142189.jpg');
 // return 'any';
-
 });
 
 Route::middleware(['guest','lang'])->group( function () {

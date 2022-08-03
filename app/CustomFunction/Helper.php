@@ -57,9 +57,7 @@ function storelogo($img)
 //////////////////////////////
 function selectLan()
 {
-
     return Language::Active()->get();
-
 }
 
 function langDir()
@@ -216,7 +214,7 @@ function orginalCategory($Cat_id)
         return mainCategory($Category->translation_of);
     }
 }
-//////  transVersion()
+//////  transVersionOfCategory (en,fr,ar,....)()
 
 function preTransVersion($abbe , $Cat_id )
 {

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserLoginLogout;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+
 class LoginController extends Controller
 {
     /*
@@ -35,6 +39,20 @@ class LoginController extends Controller
      */
     protected function authenticated()
     {
+        if (Cache::has('active_users'))
+        {
+             if (!Cache::has('user_'.Auth::user()->id))
+            {
+                Cache::rememberForever('user_'.Auth::user()->id,function() { return User::where("id",Auth::user()->id)->first();});
+                Cache::increment('active_users');
+            }
+        }
+        else {
+            Cache::put('active_users', 1);
+        }
+        event(new UserLoginLogout());
+
+
         if(Auth::user()->role_as == '1') //1 = Admin  Login
         {
             return redirect('dashboard')->with('status','Welcome to your dashboard');

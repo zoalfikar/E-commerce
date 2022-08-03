@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         UserComplain::class => [
             SendMessegeToAdmins::class,
         ],
+        'Illuminate\Auth\Events\Logout' => [
+            'App\Listeners\LogSuccessfulLogout',
+        ],
     ];
 
     /**

@@ -48,9 +48,15 @@
                 <div class="dropdown" style="padding-left:55px;">
                     <select class="btn btn-secondary dropdown-toggle" style="background-color:rgb(129, 131, 255)" class="form-select form-select-sm float-end " aria-label="Default select example" id="lang" >
                         @php $lang=selectLan(); @endphp
-                        @foreach ($lang as $item)
-                            <option {{$item->abbe==lang()?'selected':''}} value="{{$item->abbe}}"> {{$item->name}}</option>
-                        @endforeach
+                        @isset($record)
+                            @foreach ($lang as $item)
+                                <option {{$item->abbe==lang()?'selected':''}} value="{{$item->abbe}}"> {{$item->name}}</option>
+                            @endforeach
+                            @else
+                            <option {{"en"==lang()?'selected':''}} value="en"> en</option>
+
+                        @endisset
+
                       </select>
                 </div>
             </li>
