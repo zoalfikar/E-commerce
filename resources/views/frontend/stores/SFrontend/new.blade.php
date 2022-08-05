@@ -50,6 +50,10 @@
                                 <label for="slug">city</label>
                                 <input type="text" class="form-control" name="city" value="{{$user->city}}">
                             </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="myfatoora_key">myfatoora_key</label>
+                                <input type="text" class="form-control" name="myfatoora_key" placeholder="this feild will be encrypted" >
+                            </div>
                             <div class="col-md-12 mb-3">
                                 <input type="file"  name="img" class="form-control-file">
                             </div>

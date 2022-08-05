@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\CategoryVisit;
 use App\Models\Language;
@@ -8,6 +9,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Store;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -275,6 +277,31 @@ function transVersion($abbe , $Cat_id )
 }
 
 //////  end of transVersion()
+
+
+
+// user has products from this stores in cart
+function productsFromStores()
+{
+    $userCartProduct=Cart::select('id')->where('user_id',Auth::id())->get()->toArray();
+    return $categories_stores_ids =  Category::select('store_id')->with('Products')->where('status',0)->whereHas('Products',function ($q) use ($userCartProduct)
+    {
+        $q->whereIn ('id' , $userCartProduct);
+    })->distinct('store_id')->get()->toArray();
+
+
+}
+
+function productsFromStore($id)
+{
+    return $storeCartItems= Cart::where('user_id',Auth::id())->with('Product')->whereHas('Product',function ($q) use ($id)
+    {
+        $q->with('Category')->whereHas('Category',function ($q) use ($id)
+        {
+            $q->where('store_id',$id);
+        });
+    })->get();
+}
 
 
 

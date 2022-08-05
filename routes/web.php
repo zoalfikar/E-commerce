@@ -13,9 +13,13 @@ use App\Http\Controllers\Frontend\RateController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\StoresController;
 use App\Http\Controllers\payment\MyFatoorahController;
+use App\Models\User;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Support\Facades\Cache as Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Stevebauman\Location\Facades\Location;
 
@@ -32,7 +36,7 @@ use Stevebauman\Location\Facades\Location;
 Route::get('/test',function ( ) {
 //
 // event(new NewProduct("ssdsds","dcsdcdc","cdcsdcdscd","fgfgfg","sxsxsx","sxxsxs","sxsxsx"));
-event( new UserLoginLogout());
+// event( new UserLoginLogout());
 // if (Cache::has('active_users')) {
 //     // Cache::increment('active_users');
 //     Cache::decrement('active_users');
@@ -44,9 +48,14 @@ event( new UserLoginLogout());
 //  $value = Cache::get('active_users');
 // // return asset('assets/uploads/product/1652808756.png');
 // dd($value);
-return "redis done";
+// $val=Crypt::encrypt("faten ali");
+// return Crypt::decrypt($val);
 // return asset('storesLogo/1653142189.jpg');
 // return 'any';
+// return productsFromStore(null);
+
+// echo " <h1 > <a href='#'  style = \"background-color:red \"> </a><h1>" ;
+
 });
 
 Route::middleware(['guest','lang'])->group( function () {
@@ -73,7 +82,7 @@ Route::middleware(['auth','verified','lang'])->group(function()
 {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     //routes for cart
-    Route::get('/cart', [CartController::class,'showCart']);
+    Route::get('/cart/{id?}', [CartController::class,'showCart']);
     Route::post('/add-to-cart',[CartController::class,'addProduct']);
     Route::post('/delet-from-cart',[CartController::class,'deletProduct']);
     Route::post('/update-cart',[CartController::class,'updateProduct']);

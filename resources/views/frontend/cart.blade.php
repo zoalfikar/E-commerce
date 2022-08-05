@@ -16,6 +16,38 @@
     </div>
 
     <div class="container card-reload my-5">
+        <div>
+            <h6>you have products from this stores in your cart</h6>
+            <nav aria-label="Page navigation example">
+
+                <ul class="pagination">
+                  <li class="page-item">
+                    @php  $pre = (int) $index - 1; if($pre < 0) { $pre = 0;} @endphp
+                    @php  if($stores_ids[$pre]['store_id']==null) { $stores_ids[$pre]['store_id']=0 ;}   @endphp
+                    <a class="page-link" href="{{url('/cart/'.$stores_ids[$pre]['store_id'])}}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  @foreach ($stores_ids as $key => $stores_id)
+                        @php
+                            if($stores_id['store_id']==null)
+                            {
+                                $stores_id['store_id']=0 ;
+                            }
+                        @endphp
+                        <li  class="page-item" ><a  style = "{{(Request::is('cart/'.$stores_id['store_id']) || (Request::is('cart') && $key == 0 ))?' background-color:#a8ff35 ':''}}" class="page-link" href="{{url('/cart/'.$stores_id['store_id'])}}" >{{$key+1}}</a></li>
+                  @endforeach
+                  <li class="page-item">
+                    @php  $next = (int) $index + 1;  if($next = count($stores_ids)) { $next = count($stores_ids) - 1;}  @endphp
+                    @php  if($stores_ids[$next]['store_id']==null) { $stores_ids[$next]['store_id']=0 ;}   @endphp
+                    <a class="page-link" href="{{url('/cart/'.$stores_ids[$next]['store_id'])}}" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+        </div>
+
         @if (count($cartIteams)>0)
             <div class="card shadow ">
                 <div class="card-body">
@@ -24,9 +56,16 @@
 
                         <div class="row  product_data">
                             <div class="col-md-2">
+                                @if ($item->product->Category->store ==null)
+                                    E-commerce
+                                @else
+                                    {{$item->product->Category->store->name}}
+                                @endif
+                            </div>
+                            <div class="col-md-2">
                                 <img src="{{asset('assets/uploads/product/'.$item->product->img)}}" alt="NOT FOUND " style="height: 70px; width:70px">
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-3">
                                <a href="/productDetails/{{$item->product->Category->slug}}/{{$item->product->slug}}"> <h6>{{$item->product->name}}</h6></a>
                             </div>
                             <div class="col-md-3">

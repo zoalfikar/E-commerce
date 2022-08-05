@@ -26,7 +26,16 @@ class Store extends Model
         'populer',
         'pay_pal_key',
         'razpory_key',
+        'myfatoora_key',
     ];
+
+
+    protected $hidden = [
+        'pay_pal_key',
+        'razpory_key',
+        'myfatoora_key',
+    ];
+
 
     public function owner( )
     {

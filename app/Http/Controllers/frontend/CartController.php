@@ -10,13 +10,32 @@ use App\Models\Cart;
 class CartController extends Controller
 {
 
-    public function showCart () {
-        $cartIteams=Cart::where('user_id',Auth::id())->get() ;
+    public function showCart ($id = null) {
+        $stores_ids = productsFromStores();
+        $index = array_search($id,array_column($stores_ids, 'store_id')) ;
+        if ( $id != null)
+        {
+            if ($id==0)
+            {
+                $cartIteams=productsFromStore(null);
+            }
+            else
+            {
+                $cartIteams=productsFromStore($id);
+            }
+
+        }
+        else
+        {
+            $cartIteams=productsFromStore($stores_ids[0]);
+        }
+
+
         if(lang()=='ar')
         {
             return view('arabic.frontend.cart',compact('cartIteams'));
         }
-        return view('frontend.cart',compact('cartIteams'));
+        return view('frontend.cart',compact('cartIteams','stores_ids','index'));
 
     }
 

@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Notifications\StoreCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Notification;
 use Stevebauman\Location\Facades\Location;
 
@@ -49,6 +50,7 @@ class StoresController extends Controller
         $store->city= $request->input('city');
         $store->address_latitude= $request->input('lat');
         $store->address_longitude=$request->input('lng');
+        $store->myfatoora_key=Crypt::encrypt($request->input('myfatoora_key'));
         $store->save();
         //sent notification to admins
         $users=User::where("role_as" , "1")->get();
