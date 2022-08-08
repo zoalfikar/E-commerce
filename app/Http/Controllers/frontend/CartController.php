@@ -13,22 +13,29 @@ class CartController extends Controller
     public function showCart ($id = null) {
         $stores_ids = productsFromStores();
         $index = array_search($id,array_column($stores_ids, 'store_id')) ;
-        if ( $id != null)
+        if ($stores_ids != null)
         {
-            if ($id==0)
+            if ( $id != null)
             {
-                $cartIteams=productsFromStore(null);
+                if ($id==0)
+                {
+                    $cartIteams=productsFromStore(null);
+                }
+                else
+                {
+                    $cartIteams=productsFromStore($id);
+                }
+
             }
             else
             {
-                $cartIteams=productsFromStore($id);
+                $cartIteams=productsFromStore($stores_ids[0]['store_id']);
             }
+        }
+        else {
+            $cartIteams =[] ;
+        }
 
-        }
-        else
-        {
-            $cartIteams=productsFromStore($stores_ids[0]);
-        }
 
 
         if(lang()=='ar')

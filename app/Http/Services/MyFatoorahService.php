@@ -11,13 +11,19 @@ class MyFatoorahService
     private $base_url;
     private $headers;
     private $request_client;
+    private $key;
 
     public function __construct(Client $request_client) {
         $this->request_client = $request_client;
         $this->base_url = env('FATOORA_BASE_URL');
+    }
+
+    private function setKey($key)
+    {
+        $this->$key=$key;
         $this->headers = [
             'Content-type'=>'application/json',
-            'authorization'=>'Bearer '. env('MY_FATOORA_AUTHORIZATION')
+            'authorization'=>'Bearer '. $this->$key
         ];
 
     }
@@ -41,15 +47,16 @@ class MyFatoorahService
 
 
     }
-    public function sendPayment($data)
+    public function sendPayment($data,$key)
     {
-
-     return  $response = $this->buildRequest("v2/SendPayment","POST",$data) ;
+        $this->setKey($key);
+        return  $response = $this->buildRequest("v2/SendPayment","POST",$data) ;
 
     }
 
-    public function getPaymentStatus($data )
+    public function getPaymentStatus($data ,$key)
     {
+        $this->setKey($key);
         return  $response = $this->buildRequest("v2/getPaymentStatus","POST",$data) ;
     }
 

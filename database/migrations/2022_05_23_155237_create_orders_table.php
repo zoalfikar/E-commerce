@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('store_id')->unsigned();
             $table->string('fname');
             $table->string('lname');
             $table->string('email');
@@ -33,6 +34,7 @@ class CreateOrdersTable extends Migration
             $table->string('message')->nullable();
             $table->string('tracking_no');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('store_id')->references('id')->on('stores')->nullable()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

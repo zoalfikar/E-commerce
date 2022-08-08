@@ -13,22 +13,22 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
-    public function index ()
+    public function index ($store_id)
     {
-        $old_iteamCard=Cart::where('user_id',Auth::id())->get();
+        $old_iteamCard=productsFromStore($store_id);
         foreach ($old_iteamCard as $item)
         {
           if (!Product::where('id',$item->prod_id)->where('qty','>=',$item->prod_qty)->exists())
-           {
-            $removeitem= Cart::where('user_id',Auth::id())->where('prod_id',$item->prod_id)->first();
-              $removeitem->delete();
-          }
+            {
+                $removeitem= Cart::where('user_id',Auth::id())->where('prod_id',$item->prod_id)->first();
+                $removeitem->delete();
+            }
         }
-        $iteamCard=Cart::where('user_id',Auth::id())->get();
+        $iteamCard=productsFromStore($store_id);
         if (lang()=='ar') {
             return view('arabic.frontend.checkout',compact('iteamCard'));
         }
-        return view('frontend.checkout',compact('iteamCard'));
+        return view('frontend.checkout',compact('iteamCard','store_id'));
     }
     public function placeholder (Request $request)
     {
@@ -48,7 +48,8 @@ class CheckoutController extends Controller
         $order->payment_mode=$request->input('payment_mode');
         $order->payment_id=$request->input('payment_id');
         $order->tracking_no='Ecomerce'.rand(1111,9999);
-        $cartitems_total = Cart::where('user_id', Auth::id())->get();
+        $order->store_id=$request->store_id ;
+        $cartitems_total =productsFromStore($request->store_id);
         foreach ($cartitems_total as $item)
         {
             $total+=$item->prod_qty*(float)$item->Product->selling_price;
@@ -57,7 +58,7 @@ class CheckoutController extends Controller
         $order->total_price=$total;
         $order->save();
 
-        $cartitem = Cart::where('user_id', Auth::id())->get();
+        $cartitem =$cartitems_total;
         foreach ($cartitem as $item)
         {
 
@@ -90,8 +91,7 @@ class CheckoutController extends Controller
             $user->pin_code=$request->input('pincod');
             $user->update();
         }
-        $cart = Cart::where('user_id', Auth::id())->get();
-        Cart::destroy($cart);
+        Cart::destroy( $cartitem );
         if ($request->input('payment_mode')=="pay by razorpay") {
             return response()->json(['status'=>'order replaced successfully']);
         }
@@ -99,7 +99,7 @@ class CheckoutController extends Controller
     }
     public function razorpay(Request $request)
     {
-        $cartitems=Cart::where('user_id',Auth::id())->get();
+        $cartitems=productsFromStore($request->store_id);
         $total_price=0;
         foreach ($cartitems as $cartitem)
         {
@@ -107,6 +107,7 @@ class CheckoutController extends Controller
         }
 
         $firstname = $request->input('firstname');
+        $store_id = $request->input('store_id');
         $lastname = $request->input('lastname');
         $email = $request->input('email');
         $phoneNumber = $request->input('phoneNumber');
@@ -118,6 +119,7 @@ class CheckoutController extends Controller
         $pincod = $request->input('pincod');
 
         return response()->json([
+            'store_id'=>$store_id,
             'firstname'=>$firstname,
             'lastname'=>$lastname,
             'email'=>$email,

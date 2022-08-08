@@ -25,6 +25,7 @@
                             <h6>Basic Details</h6>
                             <hr>
                             <div class="row checkout-form">
+                                <input type="hidden" required value="{{$store_id}}" name="store_id" class="form-control store_id">
                                 <div class="col-md-6">
                                     <label for="">first name</label>
                                     <input type="text" required value="{{Auth::user()->name}}" name="firstname" class="form-control firstname" placeholder="enter your first name">
@@ -107,6 +108,7 @@
                             <button type="submit" class="btn btn-primary float-end w-100">Place Order | COD</button>
                             <br>
                             <button type="button" class="btn btn-success float-end w-100 razorpay_btn">pay with razorapy</button>
+                            <button type="button" class="btn btn-secondary float-end w-100 myfatoora_btn ">pay with myfatoora</button>
                             <div class="card-footer ">
                                 <div  id="paypal-button-container"></div>
                             </div>
@@ -123,7 +125,46 @@
 @section('scripts')
 
 
+ <!--my fatoora -->
+
+<script>
+    $(document).ready(function ()
+    {
+        $ ('.myfatoora_btn').click(function (e)
+        {
+            e.preventDefault();
+            var data =
+            {
+                'firstname': $('.firstname').val(),
+                'lastname': $('.lastname').val(),
+                'email': $('.email').val(),
+                'phoneNumber': $('.phoneNumber').val(),
+                'address1': $('.address1').val(),
+                'address2': $('.address2').val(),
+                'city': $('.city').val(),
+                'state': $('.state').val(),
+                'country': $('.country').val(),
+                'pincod': $('.pincod').val(),
+                'store_id': $('.store_id').val() ,
+                };
+
+            $.ajax({
+                method: "post",
+                url: "/payWith-MyFatoora",
+                data: data ,
+                success: function (response) {
+
+                }
+            });
+        });
+
+    });
+</script>
+
+
+
     <!-- paypal -->
+
     <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
     <script>
         paypal.Buttons(
@@ -209,7 +250,7 @@
             var state = $('.state').val();
             var country = $('.country').val();
             var pincod = $('.pincod').val();
-
+            var store_id = $('.store_id').val();
             if (!firstname) {
                 fname_error = "First Name is required";
                 $('#fname_error').html(fname_error);
@@ -351,6 +392,7 @@
                     'state':state,
                     'country':country,
                     'pincod':pincod,
+                    'store_id':store_id
                 }
                 $.ajax(
                 {
@@ -376,6 +418,7 @@
                                     url: "placeholder",
                                     data:
                                     {
+                                        'store_id':responsea.store_id,
                                         'firstname':response.firstname,
                                         'lastname':response.lastname,
                                         'email':response.email,
@@ -391,7 +434,6 @@
                                     },
                                     success: function (responseb)
                                     {
-                                        swal( responseb.status)
                                         $.ajax({
                                             method: "post",
                                             url: "/trending-product",
@@ -403,6 +445,7 @@
 
                                             }
                                         });
+                                        swal( responseb.status)
                                         .then((value) =>
                                         {
                                             window.location.href="/";

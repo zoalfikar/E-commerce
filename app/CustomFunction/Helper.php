@@ -283,17 +283,16 @@ function transVersion($abbe , $Cat_id )
 // user has products from this stores in cart
 function productsFromStores()
 {
-    $userCartProduct=Cart::select('id')->where('user_id',Auth::id())->get()->toArray();
-    return $categories_stores_ids =  Category::select('store_id')->with('Products')->where('status',0)->whereHas('Products',function ($q) use ($userCartProduct)
+    $userCartProduct=Cart::select('prod_id')->where('user_id',Auth::id())->get()->toArray();
+    return Category::select('store_id')->with('Products')->where('status',0)->whereHas('Products',function ($q) use ($userCartProduct)
     {
         $q->whereIn ('id' , $userCartProduct);
-    })->distinct('store_id')->get()->toArray();
-
-
+    })->distinct('store_id')->orderBy('store_id')->get()->toArray();
 }
 
 function productsFromStore($id)
 {
+    if ($id == 0) { $id = null ; }
     return $storeCartItems= Cart::where('user_id',Auth::id())->with('Product')->whereHas('Product',function ($q) use ($id)
     {
         $q->with('Category')->whereHas('Category',function ($q) use ($id)

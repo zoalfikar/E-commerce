@@ -52,7 +52,7 @@ Route::get('/test',function ( ) {
 // return Crypt::decrypt($val);
 // return asset('storesLogo/1653142189.jpg');
 // return 'any';
-// return productsFromStore(null);
+return productsFromStores();
 
 // echo " <h1 > <a href='#'  style = \"background-color:red \"> </a><h1>" ;
 
@@ -97,7 +97,7 @@ Route::middleware(['auth','verified','lang'])->group(function()
     Route::get('/get-wishlist-count', [wishlistController::class,'wishlistCount']);
 
     ////routes for checkout
-    Route::get('/checkout', [CheckoutController::class,'index']);
+    Route::get('/checkout/{store_id}', [CheckoutController::class,'index']);
     Route::post('/placeholder', [CheckoutController::class,'placeholder']);
     Route::post('/proceed-to-pay', [CheckoutController::class,'razorpay']);
     //// rating the products
@@ -122,7 +122,7 @@ Route::middleware(['auth','verified','lang'])->group(function()
     Route::post('/store-insert-product',[StoresController::class,'insertProduct']);
     Route::get('/store-edit-product/{id}',[StoresController::class,'editProduct']);
     //myfatoora
-    Route::post('/payWith-MyFatoora',[MyFatoorahController::class,'payOrder'] );
+    Route::post('/payWith-MyFatoora',[MyFatoorahController::class,'payOrder']);
     Route::get('/callback', [MyFatoorahController::class,'paymentCallback']);
     Route::get('/error',function ( )
     {

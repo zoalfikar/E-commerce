@@ -16,39 +16,38 @@
     </div>
 
     <div class="container card-reload my-5">
-        <div>
-            <h6>you have products from this stores in your cart</h6>
-            <nav aria-label="Page navigation example">
-
-                <ul class="pagination">
-                  <li class="page-item">
-                    @php  $pre = (int) $index - 1; if($pre < 0) { $pre = 0;} @endphp
-                    @php  if($stores_ids[$pre]['store_id']==null) { $stores_ids[$pre]['store_id']=0 ;}   @endphp
-                    <a class="page-link" href="{{url('/cart/'.$stores_ids[$pre]['store_id'])}}" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  @foreach ($stores_ids as $key => $stores_id)
-                        @php
-                            if($stores_id['store_id']==null)
-                            {
-                                $stores_id['store_id']=0 ;
-                            }
-                        @endphp
-                        <li  class="page-item" ><a  style = "{{(Request::is('cart/'.$stores_id['store_id']) || (Request::is('cart') && $key == 0 ))?' background-color:#a8ff35 ':''}}" class="page-link" href="{{url('/cart/'.$stores_id['store_id'])}}" >{{$key+1}}</a></li>
-                  @endforeach
-                  <li class="page-item">
-                    @php  $next = (int) $index + 1;  if($next = count($stores_ids)) { $next = count($stores_ids) - 1;}  @endphp
-                    @php  if($stores_ids[$next]['store_id']==null) { $stores_ids[$next]['store_id']=0 ;}   @endphp
-                    <a class="page-link" href="{{url('/cart/'.$stores_ids[$next]['store_id'])}}" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-        </div>
-
         @if (count($cartIteams)>0)
+            <div>
+                <h6>you have products from this stores in your cart</h6>
+                <nav aria-label="Page navigation example">
+
+                    <ul class="pagination">
+                    <li class="page-item">
+                        @php  $pre = (int) $index - 1; if($pre < 0) { $pre = 0;} @endphp
+                        @php  if($stores_ids[$pre]['store_id']==null) { $stores_ids[$pre]['store_id']=0 ;}   @endphp
+                        <a class="page-link" href="{{url('/cart/'.$stores_ids[$pre]['store_id'])}}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    @foreach ($stores_ids as $key => $stores_id)
+                            @php
+                                if($stores_id['store_id']==null)
+                                {
+                                    $stores_id['store_id']=0 ;
+                                }
+                            @endphp
+                            <li  class="page-item" ><a  style = "{{(Request::is('cart/'.$stores_id['store_id']) || (Request::is('cart') && $key == 0 ))?' background-color:#a8ff35 ':''}}" class="page-link" href="{{url('/cart/'.$stores_id['store_id'])}}" >{{$key+1}}</a></li>
+                    @endforeach
+                    <li class="page-item">
+                        @php  $next = (int) $index + 1;  if($next = count($stores_ids)) { $next = count($stores_ids) - 1;}  @endphp
+                        @php  if($stores_ids[$next]['store_id']==null) { $stores_ids[$next]['store_id']=0 ;}   @endphp
+                        <a class="page-link" href="{{url('/cart/'.$stores_ids[$next]['store_id'])}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    </ul>
+                </nav>
+            </div>
             <div class="card shadow ">
                 <div class="card-body">
                     @php $total=0;    @endphp
@@ -91,7 +90,8 @@
                 </div>
                 <div class="card-footer">
                     <h6>total price &nbsp; {{$total}}$</h6>
-                    <a href="{{url('checkout')}}" class="btn btn-outline-success float-end">check out</a>
+                    @php $i= (int) $index ; if($stores_ids[$i]['store_id']==null) { $stores_ids[$i]['store_id']=0 ;}    @endphp
+                    <a href="{{url('checkout/'.$stores_ids[$i]['store_id'])}}" class="btn btn-outline-success float-end">check out</a>
                 </div>
             </div>
         @else

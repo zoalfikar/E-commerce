@@ -29,10 +29,16 @@ class Order extends Model
         'tracking_no',
         'payment_mode',
         'payment_id',
+        'store_id',
     ];
 
     public function OrderItems ()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function store ()
+    {
+        return $this->belongsTo(Store::class,'store_id','id');
     }
 }
