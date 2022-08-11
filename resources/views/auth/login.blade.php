@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+ <center> <div id="count-down"> </div> </center>
 <div class="container">
     <div class="row justify-content-center">
-    <div id="active-users">active users on website : {{$activeUsers}}</div>
+   <center> <div id="active-users">active users on website : {{$activeUsers}}</div> </center>
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
@@ -87,6 +88,30 @@ $(function(){
 
             });
         });
+
+
+</script>
+
+{{-- timmer count down --}}
+<script>
+
+    const startminute = 4 ;
+    let time = startminute * 60 ;
+
+    const decay =  setInterval( countDown , 1000);
+
+    const countDownVal = document.getElementById('count-down');
+
+    function countDown() {
+        if (time == 0) {
+            clearInterval(decay);
+        }
+      let  minutes =Math.floor(time / 60 ) ;
+      let seconds = time % 60 ;
+      countDownVal.innerHTML = " retry after " + minutes + ":" + seconds ;
+      time --;
+    }
+
 
 
 
