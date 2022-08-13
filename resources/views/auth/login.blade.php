@@ -1,7 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
- <center> <div id="count-down"> </div> </center>
+
+@php
+$hasTooManyAttemps = false;
+foreach ($errors->all() as  $error)
+{
+   if (str_contains($error, 'Too many login attempts')) { $hasTooManyAttemps=true;  $timer= (int)substr($error,24,3); break;};
+}
+@endphp
+
+@if ($hasTooManyAttemps)
+ <center> <div id="count-down">{{$timer}}</div> </center>
+@endif
+
 <div class="container">
     <div class="row justify-content-center">
    <center> <div id="active-users">active users on website : {{$activeUsers}}</div> </center>
@@ -18,12 +30,13 @@
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                @if (!$hasTooManyAttemps)
+                                    @error('email')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                @endif
                             </div>
                         </div>
 
@@ -95,9 +108,9 @@ $(function(){
 {{-- timmer count down --}}
 <script>
 
-    const startminute = 4 ;
-    let time = startminute * 60 ;
 
+
+    let time = parseInt(document.getElementById('count-down').innerHTML);
     const decay =  setInterval( countDown , 1000);
 
     const countDownVal = document.getElementById('count-down');
@@ -105,15 +118,13 @@ $(function(){
     function countDown() {
         if (time == 0) {
             clearInterval(decay);
+            countDownVal.innerHTML = "" ;
         }
       let  minutes =Math.floor(time / 60 ) ;
       let seconds = time % 60 ;
       countDownVal.innerHTML = " retry after " + minutes + ":" + seconds ;
       time --;
     }
-
-
-
 
 </script>
 @endsection

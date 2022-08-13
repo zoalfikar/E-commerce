@@ -8,6 +8,12 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Auth\Events\Registered;
+use Stevebauman\Location\Facades\Location;
+use Illuminate\Http\Request;
+
+
 
 class RegisterController extends Controller
 {
@@ -73,4 +79,32 @@ class RegisterController extends Controller
             'ipAdrees'=> $data['ipAdrees'],
         ]);
     }
+
+    // override   register method
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        // $ipAdrees=$request->ip();
+        $ipAdrees="178.171.171.126";
+        $location = Location::get($ipAdrees);
+        $array=array("countryName"=>"","cityName"=>"","ipAdrees"=>"");
+        if ($location) {
+            $array['ipAdrees']= $ipAdrees;
+            $array['countryName']= $location->countryName;
+            $array['cityName']=$location->cityName;
+        }
+        $data=array_merge($request->all(), $array);
+        event(new Registered($user = $this->create($data)));
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+                    ? new JsonResponse([], 201)
+                    : redirect($this->redirectPath());
+    }
+
 }

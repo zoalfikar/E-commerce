@@ -1,5 +1,5 @@
 <?php
-
+use  Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Events\NewProduct;
 use App\Events\UserLoginLogout;
 use App\Http\Controllers\frontend\frontendController;
@@ -13,9 +13,11 @@ use App\Http\Controllers\Frontend\RateController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\StoresController;
 use App\Http\Controllers\payment\MyFatoorahController;
+use App\Models\Rate;
 use App\Models\User;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Encryption\Encrypter;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -33,28 +35,10 @@ use Stevebauman\Location\Facades\Location;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/test',function ( ) {
-//
-// event(new NewProduct("ssdsds","dcsdcdc","cdcsdcdscd","fgfgfg","sxsxsx","sxxsxs","sxsxsx"));
-// event( new UserLoginLogout());
-// if (Cache::has('active_users')) {
-//     // Cache::increment('active_users');
-//     Cache::decrement('active_users');
-// }
-// else {
-// Cache::put('active_users', 1);
-// }
 
-//  $value = Cache::get('active_users');
-// // return asset('assets/uploads/product/1652808756.png');
-// dd($value);
-// $val=Crypt::encrypt("faten ali");
-// return Crypt::decrypt($val);
-// return asset('storesLogo/1653142189.jpg');
-// return 'any';
-return productsFromStores();
-
-// echo " <h1 > <a href='#'  style = \"background-color:red \"> </a><h1>" ;
 
 });
 
