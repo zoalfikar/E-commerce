@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\User;
 use App\Models\wishlist;
 use App\Notifications\HaveItemInWishlist;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -37,7 +38,8 @@ class ItemInWishlist implements ShouldQueue
     {
         // $items = 'COUNT(prod_id)';
         // $users = ::selectRaw("user_id as id, {$items} as items")->groupBy('user_id')->get() ;
-        $usersItemsInWishlists=wishlist::select('user_id')->get()->toArray();
+
+        $usersItemsInWishlists=wishlist::select('user_id')->where('created_at','<',now()->subDays(30))->get()->toArray();
         $users=User::whereIn ('id' , $usersItemsInWishlists)->get();
         foreach ($users as $user ) {
             $user->notify(new HaveItemInWishlist(count($user->wishlist)));

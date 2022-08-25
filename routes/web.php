@@ -20,6 +20,7 @@ use App\Models\wishlist;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache as Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -40,13 +41,12 @@ use Stevebauman\Location\Facades\Location;
 
 
 Route::get('/test',function ( ) {
-  dispatch(new ItemInWishlist());
-  dd("done");
-// $items = 'COUNT(prod_id)';
-// $users = wishlist::selectRaw("user_id as id, {$items} as items")->groupBy('user_id')->get() ;
-//  foreach ($users as $user) {
-//     echo $user->items ."\n";
-//  } ;
+
+
+
+
+//   dd(__DIR__);
+
 });
 
 Route::middleware(['guest','lang'])->group( function () {

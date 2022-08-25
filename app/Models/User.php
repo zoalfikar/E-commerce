@@ -30,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'country',
         'pin_code',
         'ipAdrees',
+        'created_at',
 
     ];
 

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\ItemInWishlist;
 use App\Models\Category;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,6 +27,10 @@ class Kernel extends ConsoleKernel
                 $category->popular=0;
                 $category->update();
             }
+        })->monthly();
+        $schedule->call(function ()
+        {
+            dispatch(new ItemInWishlist());
         })->monthly();
     }
 
