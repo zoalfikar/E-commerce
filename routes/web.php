@@ -13,8 +13,10 @@ use App\Http\Controllers\Frontend\RateController;
 use App\Http\Controllers\Frontend\ReviewController;
 use App\Http\Controllers\Frontend\StoresController;
 use App\Http\Controllers\payment\MyFatoorahController;
+use App\Jobs\ItemInWishlist;
 use App\Models\Rate;
 use App\Models\User;
+use App\Models\wishlist;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Http\Response;
@@ -38,8 +40,13 @@ use Stevebauman\Location\Facades\Location;
 
 
 Route::get('/test',function ( ) {
-
-
+  dispatch(new ItemInWishlist());
+  dd("done");
+// $items = 'COUNT(prod_id)';
+// $users = wishlist::selectRaw("user_id as id, {$items} as items")->groupBy('user_id')->get() ;
+//  foreach ($users as $user) {
+//     echo $user->items ."\n";
+//  } ;
 });
 
 Route::middleware(['guest','lang'])->group( function () {

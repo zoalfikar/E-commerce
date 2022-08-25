@@ -11,7 +11,10 @@
                             <button class="btn btn-success float-end activeStore" value="{{$notification->data['store_slug']}}">active</button><button class="btn btn-primary float-end deletStore" value="{{$notification->data['store_slug']}}">delet</button></li>
                         @endif
                     @break
-                @case(2)
+                @case("App\Notifications\HaveItemInWishlist")
+                    <li>
+                        <a class="dropdown-item float-start" href="{{url('/wishlist')}}">you have {{$notification->data['ietms']}} in wishlist</a>
+                    </li>
                     @break
                 @default
                 <li><a class="dropdown-item" href="#">another notifications</a></li>

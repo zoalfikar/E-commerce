@@ -44,7 +44,7 @@
 
     <ul class="navbar-nav ms-auto" >
         <div class="collapse navbar-collapse" id="navbarNav">
-            <li class="nav-item">
+            <li class="nav-item mt-3">
                 <div class="dropdown" style="padding-left:55px;">
                     <select class="btn btn-secondary dropdown-toggle" style="background-color:rgb(129, 131, 255)" class="form-select form-select-sm float-end " aria-label="Default select example" id="lang" >
                         @php $lang=selectLan(); @endphp

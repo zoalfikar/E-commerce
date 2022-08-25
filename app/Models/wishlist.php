@@ -17,4 +17,5 @@ class wishlist extends Model
     function Product () {
         return $this->belongsTo(Product::class,'prod_id','id');
     }
+
 }

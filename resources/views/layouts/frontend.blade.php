@@ -27,6 +27,7 @@
         <!-- Material Icons -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
         <!-- CSS Files -->
+
         <link id="pagestyle" href={{asset('assets/css/material-dashboard.css')}} rel="stylesheet" />
         <!--JQUERY CSS-->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
@@ -144,7 +145,6 @@
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
 
         <!--broadcasting  -socket.io-  -->
-        <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
 
         <!--GOOGLE MAPS-->
         <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap"></script>
