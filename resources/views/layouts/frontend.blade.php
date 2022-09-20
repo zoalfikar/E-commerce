@@ -145,7 +145,7 @@
         <script src={{asset('assets/js/owl.carousel.min.js')}}></script>
 
         <!--broadcasting  -socket.io-  -->
-
+        <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
         <!--GOOGLE MAPS-->
         <script async src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAP_KEY') }}&callback=initMap"></script>
         <!--JQUERY AUTO COMPLETE-->

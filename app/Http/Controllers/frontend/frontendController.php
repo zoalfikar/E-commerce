@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\CategoryVisit;
+use App\Models\Follow;
 use App\Models\Order;
 use App\Models\Rate;
 use App\Models\Review;
@@ -22,12 +23,15 @@ class frontendController extends Controller
         $products=Product::where('trending','1')->where('status','0')->take(15)->get();
         $categories=Category::where('populer','1')->where('status','0')->take(15)->get();
         $stores=Store::where('populer','1')->where('active','1')->take(15)->get();
-
+        $storesFollowed = null;
+        if (Auth::id()) {
+            $storesFollowed = Follow::where('user_id',Auth::id())->pluck('store_id');
+        }
         if (lang()=='ar')
         {
             return view('arabic.frontend.index',compact('products','categories'));
         }
-        return view('frontend.index',compact('products','categories','stores'));
+        return view('frontend.index',compact('products','categories','stores','storesFollowed'));
     }
 
     public function showCategories()

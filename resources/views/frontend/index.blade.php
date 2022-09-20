@@ -123,17 +123,21 @@
     </script>
 
     <script>
+
         $(function(){
             let ip_adress = '127.0.0.1';
             let socket_port = '3000';
             let socket = io(ip_adress+ ':'+ socket_port);
-
-            socket.on('sendToClinet',(message)=>
+            var ids = {{$storesFollowed}} ;
+            const listener = (message)=>
             {
                 $('.posts').append(" <div class=\"container\"><h1>"+message.data.name+"</h1>"
                     +"<h1>"+message.data.storName+"</h1>"
                     +"</div>"
                 );
+            }
+            $.each(ids , function( index, value ) {
+                socket.on(`e_commerce_database_private-store.${value}`,listener);
             });
         });
     </script>

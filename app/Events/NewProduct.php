@@ -28,7 +28,7 @@ class NewProduct implements ShouldBroadcastNow
      *
      * @return void
      */
-    public function __construct($storName,$name,$small_description, $description,$orginal_price,$selling_price,$img)
+    public function __construct($id,$storName,$name,$small_description, $description,$orginal_price,$selling_price,$img)
     {
 
     $this->storName=$storName;
@@ -38,6 +38,7 @@ class NewProduct implements ShouldBroadcastNow
     $this->orginal_price=$orginal_price;
     $this->selling_price=$selling_price;
     $this->img=$img;
+    $this->id=$id;
     }
 
     /**
@@ -47,7 +48,7 @@ class NewProduct implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('channel-one');
+        return new PrivateChannel('store.'.$this->id);
     }
 
     public function broadcastWith()

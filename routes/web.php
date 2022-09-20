@@ -41,12 +41,10 @@ use Stevebauman\Location\Facades\Location;
 
 
 Route::get('/test',function ( ) {
-
-
-
-
+// event(new UserLoginLogout());
+    event(new NewProduct(2,'zzz','zzz','zz','zzz','zzz','zzz','zzzz'));
 //   dd(__DIR__);
-
+return "done";
 });
 
 Route::middleware(['guest','lang'])->group( function () {
